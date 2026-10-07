@@ -179,7 +179,11 @@ class CompactPowerCard extends CompactPowerCardBase {
                           threshold: { 
                             label: "Threshold",
                             selector: { number: { step: "any", } },
-                          },                                                                                                           
+                          },
+						  name: { 
+							label: "Name Label",
+							selector: { text: {} },
+						  },
                         },
                       },
                     },
@@ -369,7 +373,11 @@ class CompactPowerCard extends CompactPowerCardBase {
                       threshold: { 
                         label: "Threshold",
                         selector: { number: { step: "any", } },
-                      },                                                                                                           
+                      },
+					  name: { 
+						label: "Name Label",
+						selector: { text: {} },
+					  },
                     },
                   },
                 },
@@ -1651,8 +1659,13 @@ class CompactPowerCard extends CompactPowerCardBase {
     addEntityConfig(ents.grid);
     addEntityConfig(ents.home);
     addEntityConfig(ents.battery);
-    add(this._extractEntityRef(ents.grid?.import_entity || ents.grid?.importEntity));
-    add(this._extractEntityRef(ents.grid?.export_entity || ents.grid?.exportEntity));
+	// Ensure both are added independently to the array; this prevents them from being merged into a "Net" value.
+	if (ents.grid?.import_entity || ents.grid?.importEntity) {
+	  add(this._extractEntityRef(ents.grid?.import_entity || ents.grid?.importEntity));
+	}
+	if (ents.grid?.export_entity || ens.grid?.exportEntity) {
+	  add(this._extractEntityRef(ents.grid?.export_entity || ens.grid?.exportEntity));
+	}
 
     const pvLabels = this._normalizeLabels(ents.pv?.labels, null);
     const gridLabels = this._normalizeLabels(ents.grid?.labels, null);
@@ -1661,9 +1674,18 @@ class CompactPowerCard extends CompactPowerCardBase {
       : ents.battery?.labels;
     const batteryLabels = this._normalizeLabels(batteryLabelsSource, null);
 
-    pvLabels.forEach((lbl) => add(this._extractEntityRef(lbl?.entity)));
-    gridLabels.forEach((lbl) => add(this._extractEntityRef(lbl?.entity)));
-    batteryLabels.forEach((lbl) => add(this._extractEntityRef(lbl?.entity)));
+	pvLabels.forEach((lbl) => add(this._extractEntityRef(lbl?.entity)));
+
+	// This update ensures that if a "name" is provided in the YAML, it is utilized regardless of label type.
+	gridLabels.forEach((lbl) => {
+	  const entity = lbl.name ? lbl.name : (lbl.entity_name || lbl.entity);
+	  add(this._extractEntityRef(entity));
+	});
+
+	batteryLabels.forEach((lbl) => {
+	  const entity = lbl.name ? lbl.name : (lbl.entity_name || lbl.entity);
+	  add(this._extractEntityRef(entity));
+	});
 
     const batteryList = Array.isArray(ents.battery)
       ? ents.battery
@@ -1671,8 +1693,13 @@ class CompactPowerCard extends CompactPowerCardBase {
       ? [ents.battery]
       : [];
     for (const cfg of batteryList) {
-      add(this._extractEntityRef(cfg?.charge_entity || cfg?.chargeEntity));
-      add(this._extractEntityRef(cfg?.discharge_entity || cfg?.dischargeEntity));
+		// Ensure both are added independently; this prevents "Net" calculation from collapsing them into one value.
+		if (ents.battery?.charge_entity || ents.battery?.chargeEntity) {
+		  add(this._extractEntityRef(ents.battery?.charge_entity || ents.battery?.chargeEntity));
+		}
+		if (ents.battery?.discharge_entity || ens.battery?.dischargeEntity) {
+		  add(this._extractEntityRef(ents.battery?.discharge_entity || ens.battery?.dischargeEntity));
+		}
       const socRef =
         this._extractEntityRef(cfg?.battery_soc) ||
         this._extractEntityRef(cfg?.soc) ||

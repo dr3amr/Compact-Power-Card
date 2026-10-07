@@ -1659,13 +1659,8 @@ class CompactPowerCard extends CompactPowerCardBase {
     addEntityConfig(ents.grid);
     addEntityConfig(ents.home);
     addEntityConfig(ents.battery);
-	// Ensure both are added independently to the array; this prevents them from being merged into a "Net" value.
-	if (ents.grid?.import_entity || ents.grid?.importEntity) {
-	  add(this._extractEntityRef(ents.grid?.import_entity || ents.grid?.importEntity));
-	}
-	if (ents.grid?.export_entity || ents.grid?.exportEntity) {
-	  add(this._extractEntityRef(ents.grid?.export_entity || ents.grid?.exportEntity));
-	}
+	add(this._extractEntityRef(ents.grid?.import_entity || ents.grid?.importEntity));
+	add(this._extractEntityRef(ents.grid?.export_entity || ents.grid?.exportEntity));	
 
     const pvLabels = this._normalizeLabels(ents.pv?.labels, null);
     const gridLabels = this._normalizeLabels(ents.grid?.labels, null);
@@ -1674,18 +1669,9 @@ class CompactPowerCard extends CompactPowerCardBase {
       : ents.battery?.labels;
     const batteryLabels = this._normalizeLabels(batteryLabelsSource, null);
 
-	pvLabels.forEach((lbl) => add(this._extractEntityRef(lbl?.entity)));
-
-	// This update ensures that if a "name" is provided in the YAML, it is utilized regardless of label type.
-	gridLabels.forEach((lbl) => {
-	  const entity = lbl.name ? lbl.name : (lbl.entity_name || lbl.entity);
-	  add(this._extractEntityRef(entity));
-	});
-
-	batteryLabels.forEach((lbl) => {
-	  const entity = lbl.name ? lbl.name : (lbl.entity_name || lbl.entity);
-	  add(this._extractEntityRef(entity));
-	});
+	pvLabels.forEach((lbl) => add(this._extractEntityRef(lbl?.name || lbl?.entity)));
+	gridLabels.forEach((lbl) => add(this._extractEntityRef(lbl?.name || lbl?.entity)));
+	batteryLabels.forEach((lbl) => add(this._extractEntityRef(lbl?.name || lbl?.entity)));
 
     const batteryList = Array.isArray(ents.battery)
       ? ents.battery
@@ -1693,13 +1679,8 @@ class CompactPowerCard extends CompactPowerCardBase {
       ? [ents.battery]
       : [];
     for (const cfg of batteryList) {
-		// Ensure both are added independently; this prevents "Net" calculation from collapsing them into one value.
-		if (ents.battery?.charge_entity || ents.battery?.chargeEntity) {
-		  add(this._extractEntityRef(ents.battery?.charge_entity || ents.battery?.chargeEntity));
-		}
-		if (ents.battery?.discharge_entity || ents.battery?.dischargeEntity) {
-		  add(this._extractEntityRef(ents.battery?.discharge_entity || ents.battery?.dischargeEntity));
-		}
+	  add(this._extractEntityRef(cfg?.charge_entity || cfg?.chargeEntity));
+	  add(this._extractEntityRef(cfg?.discharge_entity || cfg?.dischargeEntity));
       const socRef =
         this._extractEntityRef(cfg?.battery_soc) ||
         this._extractEntityRef(cfg?.soc) ||

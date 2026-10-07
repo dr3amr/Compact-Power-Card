@@ -160,10 +160,6 @@ class CompactPowerCard extends CompactPowerCardBase {
                             label: "Entity Attribute",
                             selector: { text: {} },
                           },                          
-                          name: { 
-                            label: "Name Label",
-                            selector: { text: {} },
-                          },                           
                           icon: { 
                             label: "Icon",
                             selector: { icon: {} },
@@ -183,7 +179,11 @@ class CompactPowerCard extends CompactPowerCardBase {
                           threshold: { 
                             label: "Threshold",
                             selector: { number: { step: "any", } },
-                          },                                                                                                           
+                          },
+						  name: { 
+							label: "Name Label",
+							selector: { text: {} },
+						  },
                         },
                       },
                     },
@@ -354,10 +354,6 @@ class CompactPowerCard extends CompactPowerCardBase {
                         label: "Entity Attribute",
                         selector: { text: {} },
                       },                          
-                      name: { 
-                        label: "Name Label",
-                        selector: { text: {} },
-                      },                           
                       icon: { 
                         label: "Icon",
                         selector: { icon: {} },
@@ -377,7 +373,11 @@ class CompactPowerCard extends CompactPowerCardBase {
                       threshold: { 
                         label: "Threshold",
                         selector: { number: { step: "any", } },
-                      },                                                                                                           
+                      },
+					  name: { 
+						label: "Name Label",
+						selector: { text: {} },
+					  },
                     },
                   },
                 },
@@ -824,10 +824,1698 @@ class CompactPowerCard extends CompactPowerCardBase {
         height: calc(100% - 12px);
         margin: 6px;
       }
+
+      .grid-icon-wrap {
+        position: relative;
+        width: calc(32px * var(--cpc-scale, 1));
+        height: calc(32px * var(--cpc-scale, 1));
+        margin-top: 4px;
+      }
+
+      .grid-icon-circle {
+        position: absolute;
+        inset: 0;
+        background: var(--ha-card-background, var(--card-background-color));
+        border: 2px solid var(--cpc-grid-icon-stroke, #ff0000);
+        border-radius: 50%;
+        box-sizing: border-box;
+      }
+
+      .grid-icon {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .grid-icon-wrap.custom .grid-icon {
+        width: calc(100% - 12px);
+        height: calc(100% - 12px);
+        margin: 6px;
+      }
+
+      .node-marker ha-icon {
+        --mdc-icon-size: calc(32px * var(--cpc-scale, 1));
+        filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+      }
+
+      .node-label {
+        font-size: calc(16px * var(--cpc-scale, 1) * var(--cpc-text-scale, 1));
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        margin-top: -4px;
+      }
+
+      .value-number {
+        font-weight: 700;
+      }
+
+      .value-unit {
+        font-weight: 400;
+        font-size: calc(1em - 3px);
+      }
+
+      .node-label.left {
+        justify-content: flex-start;
+        text-align: left;
+        align-self: flex-start;
+      }
+
+      .node-label.right {
+        justify-content: flex-end;
+        text-align: right;
+        align-self: flex-end;
+        width: auto;
+        max-width: 100%;
+      }
+
+      .node-label ha-icon {
+        --mdc-icon-size: calc(12px * var(--cpc-scale, 1));
+      }
+
+      .home-marker {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        user-select: none;
+      }
+
+      .home-icon-wrap {
+        position: relative;
+        width: calc(60px * var(--cpc-scale, 1));
+        height: calc(60px * var(--cpc-scale, 1));
+      }
+
+      .home-icon-circle {
+        position: absolute;
+        inset: 0;
+        background: var(--ha-card-background, var(--card-background-color));
+        border: 3px solid var(--cpc-home-winner, #ff0000);
+        border-radius: 50%;
+        box-sizing: border-box;
+      }
+
+
+      .home-icon {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: block;
+        filter: none;
+      }
+
+      .home-icon-wrap.custom .home-icon {
+        width: calc(100% - 18px);
+        height: calc(100% - 18px);
+        margin: 9px;
+      }
+
+      .home-label {
+        font-size: calc(16px * var(--cpc-scale, 0.8) * var(--cpc-text-scale, 1));
+        font-weight: 700;
+        margin-top: calc(-16px * var(--cpc-scale, 0.8));
+      }
+
+      .device-power-dot {
+        width: calc(8px * var(--cpc-scale, 1));
+        height: calc(8px * var(--cpc-scale, 1));
+        border-radius: 999px;
+        background: currentColor;
+        opacity: 1;
+      }
+
+      .device-power-dot.active {
+        animation: cpc-pulse 1.4s ease-in-out infinite;
+      }
+
+      .device-power-dot-wrapper {
+        pointer-events: none;
+      }
+
+      @keyframes cpc-pulse {
+        0% {
+          transform: scale(0.85);
+        }
+        50% {
+          transform: scale(1.15);
+        }
+        100% {
+          transform: scale(0.85);
+        }
+      }
+
+      .battery-multi {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0px;
+      }
+
+      .battery-multi-item {
+        display: flex;
+        align-items: center;
+        gap: 1px;
+        font-size: calc(10px * var(--cpc-scale, 1) * var(--cpc-text-scale, 1));
+      }
+
+      .aux-marker {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        user-select: none;
+        position: relative;
+      }
+
+      .aux-marker ha-icon {
+        --mdc-icon-size: calc(24px * var(--cpc-scale, 1));
+      }
+
+      .aux-label {
+        font-size: calc(12px * var(--cpc-scale, 1) * var(--cpc-text-scale, 1));
+      }
+
+      .aux-sub-label {
+        font-size: calc(11px * var(--cpc-scale, 1) * var(--cpc-text-scale, 1));
+        font-weight: 500;
+        opacity: 0.85;
+        line-height: 1;
+      }
+
+      .pv-label-marker .aux-sub-label {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: -4px;
+        white-space: nowrap;
+      }
+
+      .device-name {
+        font-size: calc(11px * var(--cpc-scale, 1) * var(--cpc-text-scale, 1));
+        opacity: 0.85;
+        font-weight: 500;
+        display: inline-block;
+        position: absolute;
+        top: 6px;
+        left: 50%;
+        transform: translate(-50%, calc(-100% - (4px * var(--cpc-scale, 1))));
+        pointer-events: none;
+        white-space: normal;
+        text-align: center;
+        width: calc(70px * var(--cpc-scale, 1));
+        max-width: calc(70px * var(--cpc-scale, 1));
+        box-sizing: border-box;
+      }
+
+      .pv-label,
+      .node-label,
+      .home-label,
+      .aux-label,
+      .aux-sub-label,
+      .device-name,
+      .battery-soc {
+        padding: 2px 4px;
+        border-radius: 4px;
+        white-space: nowrap;
+      }
+
+      .device-name {
+        white-space: normal;
+        overflow-wrap: normal;
+        word-break: normal;
+        hyphens: none;
+        overflow: visible;
+        line-height: 0.9;
+        padding-bottom: 4px;
+      }
+
+      .clickable {
+        cursor: pointer;
+      }
+
+      .canvas {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .overlay {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .overlay-item {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        pointer-events: auto;
+      }
+
+      /* Anchor helpers so labels grow away from the icon */
+      .overlay-item.anchor-right {
+        transform: translate(-100%, -50%);
+      }
+
+      .overlay-item.anchor-left {
+        transform: translate(0, -50%);
+      }
+
+      /* Anchor top-right without vertical centering (useful for stacked lists) */
+      .overlay-item.anchor-right-top {
+        transform: translate(-100%, 0);
+      }
+
+      :host(.no-pv) .canvas,
+      ha-card.no-pv .canvas,
+      :host(.no-battery) .canvas,
+      ha-card.no-battery .canvas {
+        margin-top: -12px;
+        margin-bottom: 0px;
+      }
+
+      :host(.no-battery) #line-pv-battery,
+      :host(.no-battery) #line-home-battery,
+      :host(.no-battery) #arc-grid-battery,
+      :host(.no-battery) #dot-pv-battery,
+      :host(.no-battery) #dot-grid-battery,
+      :host(.no-battery) #dot-battery-home,
+      :host(.no-battery) #dot-battery-grid,
+      :host(.no-battery) .battery-section,
+      :host(.no-battery) .battery-label,
+      ha-card.no-battery #line-pv-battery,
+      ha-card.no-battery #line-home-battery,
+      ha-card.no-battery #arc-grid-battery,
+      ha-card.no-battery #dot-pv-battery,
+      ha-card.no-battery #dot-grid-battery,
+      ha-card.no-battery #dot-battery-home,
+      ha-card.no-battery #dot-battery-grid,
+      ha-card.no-battery .battery-section,
+      ha-card.no-battery .battery-label {
+        display: none;
+      }
+
+      :host(.pv-as-battery) .battery-label,
+      ha-card.pv-as-battery .battery-label {
+        display: block;
+      }
+
+      :host(.pv-as-battery) #line-home-battery,
+      :host(.pv-as-battery) #arc-grid-battery,
+      :host(.pv-as-battery) #dot-battery-home,
+      :host(.pv-as-battery) #dot-battery-grid,
+      ha-card.pv-as-battery #line-home-battery,
+      ha-card.pv-as-battery #arc-grid-battery,
+      ha-card.pv-as-battery #dot-battery-home,
+      ha-card.pv-as-battery #dot-battery-grid {
+        display: inline;
+      }
+
+      :host(.pv-as-battery) #line-pv-grid,
+      :host(.pv-as-battery) #line-pv-home,
+      :host(.pv-as-battery) #line-pv-battery,
+      :host(.pv-as-battery) #dot-pv-home,
+      :host(.pv-as-battery) #dot-pv-grid,
+      :host(.pv-as-battery) #dot-pv-battery,
+      ha-card.pv-as-battery #line-pv-grid,
+      ha-card.pv-as-battery #line-pv-home,
+      ha-card.pv-as-battery #line-pv-battery,
+      ha-card.pv-as-battery #dot-pv-home,
+      ha-card.pv-as-battery #dot-pv-grid,
+      ha-card.pv-as-battery #dot-pv-battery {
+        display: none;
+      }
+
+      :host(.pv-as-battery) .pv-marker .node-label,
+      ha-card.pv-as-battery .pv-marker .node-label {
+        transform: translateY(-3px);
+      }
+
+
+      :host(.no-pv) #line-pv-grid,
+      :host(.no-pv) #line-pv-home,
+      :host(.no-pv) #line-pv-battery,
+      :host(.no-pv) #dot-pv-home,
+      :host(.no-pv) #dot-pv-grid,
+      :host(.no-pv) #dot-pv-battery,
+      :host(.no-pv) .pv-section,
+      ha-card.no-pv #line-pv-grid,
+      ha-card.no-pv #line-pv-home,
+      ha-card.no-pv #line-pv-battery,
+      ha-card.no-pv #dot-pv-home,
+      ha-card.no-pv #dot-pv-grid,
+      ha-card.no-pv #dot-pv-battery,
+      ha-card.no-pv .pv-section {
+        display: none;
+      }
     `;
   }
-}
-const batteryItems = batteryList.map((b) => {
+
+  updated(changedProps) {
+    if (super.updated) super.updated(changedProps);
+    this._adjustLayout();
+    this._renderDeviceLines();
+    this._logLayoutSizes();
+    const layoutKey = `${this._hostWidth ?? 0}x${this._hostHeight ?? 0}x${this._externalHeight ?? 0}`;
+    if (layoutKey !== this._lastFlowLayoutKey) {
+      this._lastFlowLayoutKey = layoutKey;
+      this._updateFlows();
+    }
+    if (this._pendingFlowUpdate && this.shadowRoot) {
+      this._pendingFlowUpdate = false;
+      this._updateFlows();
+    }
+  }
+
+  _logLayoutSizes() {
+    const candidates = [
+      this.shadowRoot?.querySelector("ha-card"),
+      this.closest("div.card.fit-rows"),
+      this.closest("div.card"),
+      this.parentElement,
+      this,
+    ].filter(Boolean);
+    let columnSize = 0;
+    let rowSize = 0;
+    for (const candidate of candidates) {
+      const styles = getComputedStyle(candidate);
+      const nextColumn = parseFloat(styles.getPropertyValue("--column-size")) || 0;
+      const nextRow = parseFloat(styles.getPropertyValue("--row-size")) || 0;
+      if (!columnSize && nextColumn) columnSize = nextColumn;
+      if (!rowSize && nextRow) rowSize = nextRow;
+      if (columnSize && rowSize) break;
+    }
+    this._columnSize = columnSize;
+    this._rowSize = rowSize;
+    if (columnSize === this._lastColumnSize && rowSize === this._lastRowSize) return;
+    this._lastColumnSize = columnSize;
+    this._lastRowSize = rowSize;
+  }
+
+  _shouldUseExternalHeight() {
+    if (this.closest("div.card.fit-rows")) return true;
+    if (this._isInCardEditor()) return false;
+
+    const rect = this.getBoundingClientRect ? this.getBoundingClientRect() : null;
+    const measuredHeight = this._getMeasuredExternalHeight(rect);
+    return measuredHeight > 220;
+  }
+
+  _closestComposed(selector) {
+    let node = this;
+    while (node) {
+      if (node instanceof Element && node.matches(selector)) return node;
+      const root = node.getRootNode ? node.getRootNode() : null;
+      node = node.parentNode || root?.host || null;
+    }
+    return null;
+  }
+
+  _isInCardEditor() {
+    return Boolean(
+      this._closestComposed(
+        "hui-card-element-editor, hui-dialog-edit-card, hui-card-preview, hui-card-picker, ha-dialog"
+      )
+    );
+  }
+
+  _getMeasuredExternalHeight(rect = null) {
+    const box = rect || (this.getBoundingClientRect ? this.getBoundingClientRect() : null);
+    const measuredHeight = this._hostHeight || box?.height || 0;
+    if (!measuredHeight) return 0;
+    if (this.closest("div.card.fit-rows")) return measuredHeight;
+
+    const viewportHeight = typeof window !== "undefined" ? window.innerHeight || 0 : 0;
+    if (!viewportHeight || !box) return measuredHeight;
+
+    const scrollY = typeof window !== "undefined" ? window.scrollY || 0 : 0;
+    const documentTop = box.top + scrollY;
+    const availableHeight = Math.max(0, viewportHeight - Math.max(0, documentTop));
+    return availableHeight > 0 ? Math.min(measuredHeight, availableHeight) : measuredHeight;
+  }
+
+  _getLayoutMetrics({ hasPv, hasBattery, hasAnyLabels }) {
+    const designWidth = 512;
+    const designHeight = 184;
+    const defaultWidth = 512;
+    const useExternalHeight = this._shouldUseExternalHeight();
+    const defaultHeight = !useExternalHeight && (!hasPv || !hasBattery) ? 150 : 184;
+    const hostRect = this.getBoundingClientRect ? this.getBoundingClientRect() : null;
+    const outerWidth = this._hostWidth != null ? this._hostWidth : hostRect?.width || defaultWidth;
+    const measuredExternalHeight = this._getMeasuredExternalHeight(hostRect);
+    let outerHeight = defaultHeight;
+    if (useExternalHeight) {
+      outerHeight =
+        measuredExternalHeight ||
+        this._externalHeight ||
+        this._hostHeight ||
+        hostRect?.height ||
+        defaultHeight;
+    }
+    const padX = 8; // ha-card left+right padding (4px each)
+    const padY = 2; // bottom padding; top is 0
+    const baseWidth = Math.max(0, outerWidth - padX);
+    const hasExternalHeight = useExternalHeight && (this._externalHeight != null || this._hostHeight != null);
+    const compactTrim = 0;
+    const baseHeight = hasExternalHeight
+      ? Math.max(0, outerHeight - padY - compactTrim)
+      : Math.max(0, outerHeight - padY - compactTrim);
+    const renderScaleY = baseHeight > 0 ? (outerHeight - padY) / baseHeight : 1;
+    const xScale = baseWidth / designWidth;
+    const yScale = baseHeight / designHeight;
+    const viewHeight = baseHeight;
+    const rawRowSize = this._rowSize ?? this._lastRowSize ?? 0;
+    const rowCount =
+      rawRowSize > 0 && rawRowSize <= 10
+        ? rawRowSize
+        : Math.max(1, Math.round((outerHeight - padY) / (designHeight / 3)));
+    const rawColumnSize = this._columnSize ?? this._lastColumnSize ?? 0;
+    const columnCount =
+      rawColumnSize > 0 && rawColumnSize <= 24
+        ? rawColumnSize
+        : Math.max(1, Math.round((outerWidth - padX) / (designWidth / 12)));
+    let maxItemsByColumns = Math.max(1, Math.floor(columnCount / 1.5));
+    if (baseWidth <= 430) {
+      maxItemsByColumns = Math.min(maxItemsByColumns, 8);
+    }
+    const anchorLeftX = 51.2;
+    const sx = (v) => v * xScale;
+    const yOffset = 4;
+    const syTop = (v) => v + yOffset; // keep fixed distance from top
+    const sy = syTop;
+    const syHome = (v) => baseHeight - (designHeight - (v + yOffset)); // keep fixed distance from bottom
+    const syGridBatt = (v) => (v + yOffset) * yScale; // scale mid rows with height
+    const homeCenterX = baseWidth / 2;
+    const pvCenterX = homeCenterX;
+    const pvNodeY = sy(52);
+    const homeAnchorY = syHome(131);
+    const homeLineEndY = Math.max(0, homeAnchorY - 6);
+    const gridLineStartX = 35; // fixed distance from left
+    const gridLineEndX = baseWidth - 35; // fixed distance from right
+    const gridNodeY = syGridBatt(86);
+    const gridPvStartY = gridNodeY - 10; // start 10px above grid/battery baseline
+    const humpWidth = 22; // tighter hump span
+    const humpHeight = 7;
+    const humpHeightAdj = humpHeight / renderScaleY; // keep fixed screen px
+    const humpStartX = homeCenterX - humpWidth / 2;
+    const humpEndX = homeCenterX + humpWidth / 2;
+    const humpPeakY = gridNodeY - humpHeightAdj;
+    const humpCtrlInX = humpStartX + humpWidth * 0.25;
+    const humpCtrlOutX = humpEndX - humpWidth * 0.25;
+    const pvGridEndX = homeCenterX - 10; // Grid->PV ends 10px left of center
+    const pvGridTurnRadius = 8; // slightly larger radius for the grid→PV corner
+    const pvBatteryStartX = homeCenterX + 10; // shift PV→Battery start 10px right of center
+    const pvBatteryEndY = gridNodeY - 10; // lift PV→Battery end 10px above grid/battery baseline
+    const gridHomeStartY = gridNodeY + 10; // drop grid→home start 10px below grid/battery baseline
+    const gridHomeEndX = homeCenterX - 10; // end 10px left of home center
+    const batteryHomeStartY = gridNodeY + 10; // drop battery→home start 10px below grid/battery baseline
+    const batteryHomeEndX = homeCenterX + 10; // end 10px right of home center
+    const pvNode = { x: pvCenterX, y: pvNodeY };
+    const gridNode = { x: gridLineStartX, y: gridNodeY };
+    const batteryNode = { x: gridLineEndX, y: gridNodeY };
+    const homeNode = { x: homeCenterX, y: homeLineEndY };
+
+    return {
+      designWidth,
+      designHeight,
+      defaultWidth,
+      defaultHeight,
+      hostRect,
+      outerWidth,
+      outerHeight,
+      padX,
+      padY,
+      baseWidth,
+      baseHeight,
+      viewHeight,
+      renderScaleY,
+      xScale,
+      yScale,
+      hostRect,
+      rowCount,
+      columnCount,
+      maxItemsByColumns,
+      anchorLeftX,
+      sx,
+      yOffset,
+      syTop,
+      sy,
+      syHome,
+      syGridBatt,
+      homeCenterX,
+      pvCenterX,
+      pvNodeY,
+      homeAnchorY,
+      homeLineEndY,
+      gridLineStartX,
+      gridLineEndX,
+      gridNodeY,
+      gridPvStartY,
+      humpWidth,
+      humpHeight,
+      humpHeightAdj,
+      humpStartX,
+      humpEndX,
+      humpPeakY,
+      humpCtrlInX,
+      humpCtrlOutX,
+      pvGridEndX,
+      pvGridTurnRadius,
+      pvBatteryStartX,
+      pvBatteryEndY,
+      gridHomeStartY,
+      gridHomeEndX,
+      batteryHomeStartY,
+      batteryHomeEndX,
+      pvNode,
+      gridNode,
+      batteryNode,
+      homeNode,
+    };
+  }
+
+  _renderDeviceLines() {
+    const root = this.shadowRoot;
+    if (!root) return;
+    const group = root.getElementById("device-lines");
+    if (!group) return;
+    group.innerHTML = "";
+    const useDeviceLines = this._useDevicePowerLines();
+    const lines = useDeviceLines && Array.isArray(this._deviceLines) ? this._deviceLines : [];
+    if (!this._deviceLineStates) this._deviceLineStates = new Map();
+    const now = Date.now();
+    let nextFlickerEnd = null;
+    const ns = "http://www.w3.org/2000/svg";
+    for (const ln of lines) {
+      const path = document.createElementNS(ns, "path");
+      const state = this._deviceLineStates.get(ln.key) || {};
+      const flickerUntil = state.flickerUntil || 0;
+      const flicker = flickerUntil > now;
+      if (flickerUntil > now) {
+        nextFlickerEnd = nextFlickerEnd == null ? flickerUntil : Math.min(nextFlickerEnd, flickerUntil);
+      }
+      const horizDist = Math.abs(ln.homeX - ln.startX);
+      const vertDist = Math.abs(ln.downY - ln.upY);
+      const cornerRadius = Math.min(4, horizDist / 2, vertDist);
+      const dir = ln.homeX >= ln.startX ? 1 : -1;
+      const useCurve = cornerRadius > 0 && horizDist > 0;
+      const d = useCurve
+        ? `M${ln.startX} ${ln.startY} V${ln.downY - cornerRadius} ` +
+          `Q${ln.startX} ${ln.downY} ${ln.startX + dir * cornerRadius} ${ln.downY} ` +
+          `H${ln.homeX}`
+        : `M${ln.startX} ${ln.startY} V${ln.downY} H${ln.homeX}`;
+      path.setAttribute(
+        "d",
+        d
+      );
+      path.setAttribute("fill", "none");
+      path.setAttribute("stroke", ln.color);
+      path.setAttribute(
+        "class",
+        `device-line${flicker ? " device-line-flicker" : ""}`
+      );
+      path.style.setProperty("--device-line-opacity", String(ln.opacity ?? 1));
+      path.setAttribute("stroke-width", "2");
+      path.setAttribute("stroke-linecap", "round");
+      path.setAttribute("vector-effect", "non-scaling-stroke");
+      if (ln.dashed && !flicker) {
+        path.setAttribute("stroke-dasharray", "1 3");
+      } else if (this._allowGlowEffects()) {
+        path.style.filter = `drop-shadow(0 0 6px ${ln.color})`;
+      }
+      group.appendChild(path);
+    }
+    if (nextFlickerEnd == null) {
+      for (const state of this._deviceLineStates.values()) {
+        const flickerUntil = state?.flickerUntil || 0;
+        if (flickerUntil > now) {
+          nextFlickerEnd = nextFlickerEnd == null ? flickerUntil : Math.min(nextFlickerEnd, flickerUntil);
+        }
+      }
+    }
+    if (nextFlickerEnd != null) {
+      const delay = Math.max(0, nextFlickerEnd - now + 20);
+      if (this._deviceLineFlickerTimer) clearTimeout(this._deviceLineFlickerTimer);
+      this._deviceLineFlickerTimer = setTimeout(() => {
+        this._deviceLineFlickerTimer = null;
+        this.requestUpdate();
+      }, delay);
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    if (!this._resizeObserver) {
+      this._resizeObserver = new ResizeObserver((entries) => {
+        const rect = entries?.[0]?.contentRect;
+        if (rect) {
+          const newW = rect.width;
+          const newH = rect.height;
+          if (newW > 0 && newH > 0 && !this._layoutReady) {
+            this._layoutReady = true;
+            this.requestUpdate();
+          }
+          const prevW = this._hostWidth;
+          const prevH = this._hostHeight;
+          this._hostWidth = newW;
+          this._hostHeight = newH;
+          const widthChanged = prevW != null && newW !== prevW;
+          const heightChanged = prevH != null && newH !== prevH;
+          this._externalHeight = newH;
+          if (prevW == null || prevH == null || widthChanged || heightChanged) {
+            this.requestUpdate();
+          }
+        }
+        this._updateScale();
+      });
+    }
+    this._resizeObserver.observe(this);
+    this._updateScale();
+  }
+
+
+  disconnectedCallback() {
+    if (this._resizeObserver) {
+      this._resizeObserver.disconnect();
+      this._resizeObserver = null;
+    }
+    super.disconnectedCallback();
+  }
+
+  _updateScale() {
+    const rect = this.getBoundingClientRect ? this.getBoundingClientRect() : null;
+    const hostWidth = this._hostWidth != null ? this._hostWidth : rect?.width || 0;
+    if (!hostWidth || hostWidth < 200) {
+      this.style.setProperty("--cpc-scale", "1");
+      return;
+    }
+    const baseWidth = 512; // match viewBox width
+    const widthScale = hostWidth / baseWidth;
+    const scale = Math.max(0.8, Math.min(1.0, widthScale));
+    this.style.setProperty("--cpc-scale", scale.toFixed(3));
+  }
+
+  _adjustLayout() {
+    const root = this.shadowRoot;
+    if (!root) return;
+    this._updateScale();
+    const header = root.querySelector(".pv-header");
+    const svg = root.querySelector("svg");
+    const line = root.getElementById("line-pv-home");
+    if (!header || !svg || !line) return;
+
+    svg.style.marginTop = "0px";
+    svg.style.transform = "translateY(0px)";
+
+    const headerBox = header.getBoundingClientRect();
+    const lineBox = line.getBoundingClientRect();
+    const gap = lineBox.top - headerBox.bottom;
+
+    const desiredGap = 12;
+    const delta = gap - desiredGap;
+
+    svg.style.transform = `translateY(${-delta}px)`;
+  }
+
+  _getEntityConfig(kind) {
+    const ents = this._config?.entities || {};
+    const raw = ents[kind];
+    if (!raw) return { entity: null };
+    if (typeof raw === "string") return { entity: raw };
+    if (Array.isArray(raw)) return raw.map((item) => this._normalizeEntityConfig(item));
+    if (typeof raw === "object") {
+      return { entity: raw.entity || null, color: raw.color, ...raw };
+    }
+    return { entity: null };
+  }
+
+  _normalizeEntityConfig(raw) {
+    if (!raw) return { entity: null };
+    if (typeof raw === "string") return { entity: raw };
+    if (typeof raw === "object") return { entity: raw.entity || null, color: raw.color, ...raw };
+    return { entity: null };
+  }
+
+  _normalizeLabels(labels, max = 2) {
+    if (!labels) return [];
+    const arr = Array.isArray(labels) ? labels : [labels];
+    const normalized = arr
+      .map((item) => {
+        if (!item) return null;
+        if (typeof item === "string") return { entity: item };
+        if (typeof item === "object") {
+          const entity =
+            item.entity ||
+            item.entity_id ||
+            item.id ||
+            item.name ||
+            item.source ||
+            item.src ||
+            item.label;
+          if (!entity) return null;
+          return {
+            entity,
+            icon: item.icon,
+            color: item.color,
+            unit: item.unit,
+            ...item,
+          };
+        }
+        return null;
+      })
+      .filter(Boolean);
+    if (max == null) return normalized;
+    return normalized.slice(0, Math.max(0, max));
+  }
+
+  _normalizeSources(list) {
+    return (Array.isArray(list) ? list : [])
+      .map((raw) => {
+        if (typeof raw === "string") return { entity: raw };
+        if (typeof raw === "object" && raw) {
+          const explicit =
+            raw.entity || raw.entity_id || raw.id || raw.name || raw.source || raw.src;
+          if (explicit) return { ...raw, entity: explicit };
+          const keys = Object.keys(raw || {}).filter(
+            (k) => !["threshold", "color", "icon"].includes(k)
+          );
+          if (keys.length === 1) return { ...raw, entity: keys[0] };
+          return null;
+        }
+        return null;
+      })
+      .filter(Boolean);
+  }
+
+  _coerceBoolean(val, defaultVal = false) {
+    if (val === undefined || val === null) return defaultVal;
+    if (typeof val === "string") {
+      const lower = val.toLowerCase().trim();
+      if (["false", "off", "0", "no"].includes(lower)) return false;
+      if (["true", "on", "1", "yes"].includes(lower)) return true;
+    }
+    return Boolean(val);
+  }
+
+  _extractEntityRef(val) {
+    if (!val) return null;
+    if (typeof val === "string") return val;
+    if (typeof val === "object") {
+      return (
+        val.entity ||
+        val.entity_id ||
+        val.id ||
+        val.name ||
+        val.source ||
+        val.src ||
+        null
+      );
+    }
+    return null;
+  }
+
+  _collectEntityIds() {
+    const ids = new Set();
+    const ents = this._config?.entities || {};
+    const add = (id) => {
+      if (id) ids.add(id);
+    };
+    const addEntityConfig = (cfg) => {
+      if (!cfg) return;
+      if (Array.isArray(cfg)) {
+        cfg.forEach(addEntityConfig);
+        return;
+      }
+      add(this._extractEntityRef(cfg));
+    };
+
+    addEntityConfig(ents.pv);
+    addEntityConfig(ents.grid);
+    addEntityConfig(ents.home);
+    addEntityConfig(ents.battery);
+	// Ensure both are added independently to the array; this prevents them from being merged into a "Net" value.
+	if (ents.grid?.import_entity || ents.grid?.importEntity) {
+	  add(this._extractEntityRef(ents.grid?.import_entity || ents.grid?.importEntity));
+	}
+	if (ents.grid?.export_entity || ens.grid?.exportEntity) {
+	  add(this._extractEntityRef(ents.grid?.export_entity || ens.grid?.exportEntity));
+	}
+
+    const pvLabels = this._normalizeLabels(ents.pv?.labels, null);
+    const gridLabels = this._normalizeLabels(ents.grid?.labels, null);
+    const batteryLabelsSource = Array.isArray(ents.battery)
+      ? ents.battery_labels || ents.battery?.labels
+      : ents.battery?.labels;
+    const batteryLabels = this._normalizeLabels(batteryLabelsSource, null);
+
+	pvLabels.forEach((lbl) => add(this._extractEntityRef(lbl?.entity)));
+
+	// This update ensures that if a "name" is provided in the YAML, it is utilized regardless of label type.
+	gridLabels.forEach((lbl) => {
+	  const entity = lbl.name ? lbl.name : (lbl.entity_name || lbl.entity);
+	  add(this._extractEntityRef(entity));
+	});
+
+	batteryLabels.forEach((lbl) => {
+	  const entity = lbl.name ? lbl.name : (lbl.entity_name || lbl.entity);
+	  add(this._extractEntityRef(entity));
+	});
+
+    const batteryList = Array.isArray(ents.battery)
+      ? ents.battery
+      : ents.battery
+      ? [ents.battery]
+      : [];
+    for (const cfg of batteryList) {
+		// Ensure both are added independently; this prevents "Net" calculation from collapsing them into one value.
+		if (ents.battery?.charge_entity || ents.battery?.chargeEntity) {
+		  add(this._extractEntityRef(ents.battery?.charge_entity || ents.battery?.chargeEntity));
+		}
+		if (ents.battery?.discharge_entity || ens.battery?.dischargeEntity) {
+		  add(this._extractEntityRef(ents.battery?.discharge_entity || ens.battery?.dischargeEntity));
+		}
+      const socRef =
+        this._extractEntityRef(cfg?.battery_soc) ||
+        this._extractEntityRef(cfg?.soc) ||
+        this._extractEntityRef(cfg?.soc_entity) ||
+        this._extractEntityRef(cfg?.battery_soc_entity) ||
+        this._extractEntityRef(cfg?.battery_soc_id) ||
+        this._extractEntityRef(cfg?.soc_entity_id);
+      add(socRef);
+    }
+
+    const { sources } = this._getSourcesConfig();
+    sources.forEach((src) => {
+      add(this._extractEntityRef(src?.entity));
+      add(this._extractEntityRef(src?.switch_entity));
+      add(this._extractEntityRef(src?.name));
+    });
+
+    return ids;
+  }
+
+  _shouldUpdateForHass(hass) {
+    const themeMode = hass?.themes?.darkMode ?? null;
+    if (themeMode !== this._lastThemeMode) {
+      this._lastThemeMode = themeMode;
+      return true;
+    }
+
+    const ids = this._trackedEntityIds || new Set();
+    if (!ids.size) return true;
+
+    let changed = false;
+    for (const id of ids) {
+      const st = hass?.states?.[id];
+      const stamp = st ? `${st.last_changed}|${st.last_updated}` : "missing";
+      const prev = this._lastEntityStates.get(id);
+      if (prev !== stamp) {
+        this._lastEntityStates.set(id, stamp);
+        changed = true;
+      }
+    }
+    if (!changed) return false;
+
+    for (const id of Array.from(this._lastEntityStates.keys())) {
+      if (!ids.has(id)) this._lastEntityStates.delete(id);
+    }
+    return true;
+  }
+
+  _getCurveFactor() {
+    const raw = Number(this._config?.curve_factor);
+    if (Number.isFinite(raw)) return Math.min(5, Math.max(0, raw));
+    const legacyCurved = this._coerceBoolean(this._config?.curved_lines, true);
+    return legacyCurved ? 1 : 0;
+  }
+
+  _useCurvedLines() {
+    return this._getCurveFactor() > 0;
+  }
+
+  _useDevicePowerLines() {
+    return this._coerceBoolean(this._config?.enable_device_power_lines, false);
+  }
+
+  _allowGlowEffects() {
+    if (this._isLightTheme()) return false;
+    return !this._coerceBoolean(this._config?.remove_glow_effects, false);
+  }
+
+  _getSourcesConfig() {
+    // Prefer new `devices` key; fall back to legacy `sources` for backwards compatibility.
+    const raw =
+      this._config?.entities?.devices ??
+      this._config?.entities?.sources;
+    const hasTopLevelNew = Object.prototype.hasOwnProperty.call(
+      this._config || {},
+      "subtract_devices_from_home"
+    );
+    const hasTopLevelLegacy = Object.prototype.hasOwnProperty.call(this._config || {}, "subtract_from_home");
+    const topLevelNew = hasTopLevelNew
+      ? this._coerceBoolean(this._config?.subtract_devices_from_home, true)
+      : null;
+    const topLevelLegacy = hasTopLevelLegacy
+      ? this._coerceBoolean(this._config?.subtract_from_home, false)
+      : null;
+    const hasTopLevelSubtract = hasTopLevelNew || hasTopLevelLegacy;
+    const topLevelSubtract = topLevelNew != null ? topLevelNew : topLevelLegacy;
+    let subtractFromHome = topLevelSubtract != null ? topLevelSubtract : false;
+    let list = [];
+
+    if (Array.isArray(raw)) {
+      list = raw;
+    } else if (raw && typeof raw === "object") {
+      if (!hasTopLevelSubtract && Object.prototype.hasOwnProperty.call(raw, "subtract_from_home")) {
+        subtractFromHome = this._coerceBoolean(raw.subtract_from_home, true);
+      }
+      if (Array.isArray(raw.list)) list = raw.list;
+      else if (Array.isArray(raw.items)) list = raw.items;
+      else if (Array.isArray(raw.entities)) list = raw.entities;
+      else if (Array.isArray(raw.sources)) list = raw.sources;
+    }
+
+    return { sources: this._normalizeSources(list), subtractFromHome };
+  }
+
+  _getColor(kind, entityCfg) {
+    const cfg = this._config || {};
+    const colors = cfg.colors || {};
+
+    const defaults = {
+      pv: "var(--energy-solar-color)",
+      grid: "var(--energy-grid-consumption-color)",
+      home: "var(--energy-battery-out-color)",
+      battery: "var(--energy-battery-in-color)",
+    };
+
+    return (
+      entityCfg?.color ||
+      colors[kind] ||
+      cfg[`${kind}_color`] ||
+      defaults[kind]
+    );
+  }
+
+  _getHeightFactor() {
+    return 1;
+  }
+
+  _getEffectiveHeightFactor(batteryCount = 1) {
+    return 1;
+  }
+
+  _isLightTheme() {
+    const theme = this.hass?.themes;
+    const body = document?.body;
+    const root = document?.documentElement;
+    const hasDarkClass = body?.classList?.contains("theme-dark") || body?.classList?.contains("dark");
+    const hasLightClass = body?.classList?.contains("theme-light");
+    const dataTheme = String(root?.getAttribute("data-theme") || "").toLowerCase();
+    if (theme?.darkMode === true) return false;
+    if (theme?.darkMode === false && !hasDarkClass) return true;
+    if (hasDarkClass) return false;
+    if (hasLightClass) return true;
+    if (dataTheme.includes("dark")) return false;
+    if (dataTheme.includes("light")) return true;
+    const scheme = root ? getComputedStyle(root).getPropertyValue("color-scheme") : "";
+    if (scheme && scheme.includes("dark") && !scheme.includes("light")) return false;
+    const prefersDark = window?.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
+    if (prefersDark) return false;
+    return false;
+  }
+
+  _formatEntity(entityId, decimals = 1, attribute = null, unitOverride = null) {
+    if (!this.hass || !entityId) return "";
+    const obj = this.hass.states[entityId];
+    if (!obj) return "";
+    const s = attribute ? obj.attributes?.[attribute] : obj.state;
+    const u = obj.attributes.unit_of_measurement;
+    if (unitOverride) {
+      const num = this._parseNumberStrict(s);
+      const uo = String(unitOverride || "").toLowerCase();
+      const dec = uo === "w" ? 0 : decimals;
+      if (num != null) {
+        if (["w", "kw", "mw"].includes(uo)) {
+          const watts = this._toWatts(num, u);
+          const factor = uo === "kw" ? 1 / 1000 : uo === "mw" ? 1 / 1000000 : 1;
+          const converted = watts * factor;
+          return `${converted.toFixed(dec)} ${unitOverride}`;
+        }
+        return `${num.toFixed(dec)} ${unitOverride}`;
+      }
+      return `${s} ${unitOverride}`;
+    }
+    if (s === "unknown" || s === "unavailable") return s;
+    const num = this._parseNumberStrict(s);
+    const uLower = typeof u === "string" ? u.toLowerCase() : "";
+    const decimalsToUse = uLower === "w" ? 0 : decimals;
+    // Auto convert kWh → MWh when large
+    if (num != null && uLower === "kwh" && Math.abs(num) >= 1000) {
+      const mwh = num / 1000;
+      return `${mwh.toFixed(decimals)} MWh`;
+    }
+    if (this._isWattToKw(num, u)) return this._formatPower(num, u, decimals);
+    if (num != null) {
+      if (u) return `${num.toFixed(decimalsToUse)} ${u}`;
+      return num.toFixed(decimalsToUse);
+    }
+    return u ? `${s} ${u}` : s;
+  }
+
+  _formatEntityStateWithUnit(entityId) {
+    if (!this.hass || !entityId) return "";
+    const obj = this.hass.states[entityId];
+    if (!obj) return "";
+    const state = obj.state;
+    const unit = obj.attributes?.unit_of_measurement;
+    if (unit) return `${state} ${unit}`;
+    return state == null ? "" : String(state);
+  }
+
+  _isWattToKw(num, unit) {
+    return unit && unit.toLowerCase() === "w" && Number.isFinite(num) && Math.abs(num) >= 1000;
+  }
+
+  _getPowerUnit() {
+    const raw = String(this._config?.power_unit || "").trim().toLowerCase();
+    if (["w", "kw", "mw"].includes(raw)) return raw;
+    return null;
+  }
+
+  _formatPowerWithOverride(watts, decimals = 1, fallbackUnit = "W", unitOverride = null) {
+    if (unitOverride && Number.isFinite(watts)) {
+      const u = String(unitOverride || "").toLowerCase();
+      const factor = u === "kw" ? 1 / 1000 : u === "mw" ? 1 / 1000000 : 1;
+      const converted = watts * factor;
+      const dec = u === "w" ? 0 : decimals;
+      const label = u === "kw" ? "kW" : u === "mw" ? "mW" : unitOverride;
+      return `${converted.toFixed(dec)} ${label}`;
+    }
+    const cardUnit = this._getPowerUnit();
+    if (cardUnit && Number.isFinite(watts)) {
+      const factor = cardUnit === "kw" ? 1 / 1000 : cardUnit === "mw" ? 1000 : 1;
+      const converted = watts * factor;
+      const dec = cardUnit === "w" ? 0 : decimals;
+      const label = cardUnit === "kw" ? "kW" : cardUnit === "mw" ? "mW" : "W";
+      return `${converted.toFixed(dec)} ${label}`;
+    }
+    return this._formatPower(watts, fallbackUnit, decimals, unitOverride);
+  }
+
+  _formatPower(num, unit, decimals = 1, unitOverride = null) {
+    const displayUnit = unitOverride || unit;
+    const isWatts = String(displayUnit || "").toLowerCase() === "w";
+    const dec = isWatts ? 0 : decimals;
+    if (unitOverride) {
+      return `${num.toFixed(dec)} ${displayUnit}`;
+    }
+    if (this._isWattToKw(num, unit)) {
+      const kw = num / 1000;
+      return `${kw.toFixed(decimals)} kW`;
+    }
+    if (displayUnit) return `${num.toFixed(dec)} ${displayUnit}`;
+    return String(num);
+  }
+
+  _getEntityIcon(entityId, fallback = "mdi:power-plug") {
+    if (!entityId) return fallback;
+    const st = this.hass?.states?.[entityId];
+    return st?.attributes?.icon || fallback;
+  }
+
+  _getBatteryIcon(soc) {
+    const pct = Math.max(0, Math.min(100, Number.isFinite(soc) ? soc : 0));
+    if (pct >= 95) return "mdi:battery";
+    if (pct >= 85) return "mdi:battery-90";
+    if (pct >= 75) return "mdi:battery-80";
+    if (pct >= 65) return "mdi:battery-70";
+    if (pct >= 55) return "mdi:battery-60";
+    if (pct >= 45) return "mdi:battery-50";
+    if (pct >= 35) return "mdi:battery-40";
+    if (pct >= 25) return "mdi:battery-30";
+    if (pct >= 15) return "mdi:battery-20";
+    if (pct >= 5) return "mdi:battery-10";
+    return "mdi:battery-outline";
+  }
+
+  _getLabelIcon(entityId, attribute = null, fallback = "mdi:tag-text-outline") {
+    if (!entityId) return fallback;
+    const st = this.hass?.states?.[entityId];
+    const entityIcon = st?.attributes?.icon;
+    const deviceClass = String(st?.attributes?.device_class || "").toLowerCase();
+    if (entityIcon) return entityIcon;
+    if (deviceClass === "battery") {
+      const soc = this._getNumeric(entityId, attribute);
+      return this._getBatteryIcon(soc);
+    }
+    return this._getEntityIcon(entityId, fallback);
+  }
+
+  _getMdiPath(icon) {
+    if (!icon) return null;
+    const cached = this._iconPathCache?.get(icon);
+    if (cached) return cached;
+    const parts = String(icon).split(":");
+    const set = parts[0];
+    const name = parts[1];
+    if (!set || !name) return null;
+    const registry = window.customIcons?.[set];
+    const getIcon = registry?.getIcon;
+    if (typeof getIcon !== "function") {
+      const fallback = this._getMdiFallbackPath(set, name);
+      if (fallback) {
+        if (!this._iconPathCache) this._iconPathCache = new Map();
+        this._iconPathCache.set(icon, fallback);
+        return fallback;
+      }
+      this._queueHaIconPath(icon);
+      return null;
+    }
+    const iconResult = getIcon(name);
+    if (!iconResult) return null;
+    if (typeof iconResult.then === "function") {
+      iconResult
+        .then((resolved) => {
+          const path = this._extractIconPath(resolved);
+          if (path) {
+            if (!this._iconPathCache) this._iconPathCache = new Map();
+            this._iconPathCache.set(icon, path);
+            this.requestUpdate();
+          }
+        })
+        .catch(() => {});
+      return null;
+    }
+    const path = this._extractIconPath(iconResult) || this._getMdiFallbackPath(set, name);
+    if (path) {
+      if (!this._iconPathCache) this._iconPathCache = new Map();
+      this._iconPathCache.set(icon, path);
+      return path;
+    }
+    this._queueHaIconPath(icon);
+    return null;
+  }
+
+  _getMdiFallbackPath(set, name) {
+    if (set !== "mdi" || !name) return null;
+    const mdiIcons = window.mdiIcons || window.MDI_ICONS || window.mdiSvgPaths || null;
+    if (!mdiIcons) return null;
+    if (typeof mdiIcons[name] === "string") return mdiIcons[name];
+    const camel = name
+      .split("-")
+      .map((part, idx) => (idx === 0 ? part : part.charAt(0).toUpperCase() + part.slice(1)))
+      .join("");
+    const key = `mdi${camel.charAt(0).toUpperCase()}${camel.slice(1)}`;
+    if (typeof mdiIcons[key] === "string") return mdiIcons[key];
+    return null;
+  }
+
+  _extractIconPath(iconResult) {
+    if (!iconResult) return null;
+    if (typeof iconResult === "string") return iconResult;
+    if (typeof iconResult.path === "string") return iconResult.path;
+    if (Array.isArray(iconResult.path)) return iconResult.path.join(" ");
+    if (typeof iconResult.body === "string") {
+      const m = iconResult.body.match(/d="([^"]+)"/);
+      if (m) return m[1];
+    }
+    return null;
+  }
+
+  _queueHaIconPath(icon) {
+    if (!icon || !this.shadowRoot) return;
+    if (!this._iconPathPending) this._iconPathPending = new Set();
+    if (this._iconPathPending.has(icon)) return;
+    this._iconPathPending.add(icon);
+    requestAnimationFrame(async () => {
+      try {
+        if (this.updateComplete) await this.updateComplete;
+        await customElements.whenDefined("ha-icon");
+        const container = this.shadowRoot?.getElementById("icon-probe");
+        if (!container) return;
+        const probe = document.createElement("ha-icon");
+        probe.style.display = "none";
+        probe.icon = icon;
+        if (this.hass) probe.hass = this.hass;
+        container.appendChild(probe);
+        if (probe.updateComplete) await probe.updateComplete;
+        const directPath = probe.shadowRoot?.querySelector("path");
+        const svgIcon = probe.shadowRoot?.querySelector("ha-svg-icon");
+        const nestedPath = svgIcon?.shadowRoot?.querySelector("path") || null;
+        const pathEl = directPath || nestedPath;
+        const d = pathEl?.getAttribute?.("d") || null;
+        if (d) {
+          if (!this._iconPathCache) this._iconPathCache = new Map();
+          this._iconPathCache.set(icon, d);
+          this.requestUpdate();
+        }
+        container.removeChild(probe);
+      } finally {
+        this._iconPathPending.delete(icon);
+      }
+    });
+  }
+
+  _isPowerDevice(entityId) {
+    if (!entityId) return false;
+    const st = this.hass?.states?.[entityId];
+    const deviceClass = String(st?.attributes?.device_class || "").toLowerCase();
+    return deviceClass === "power";
+  }
+
+  _getBatterySocRef(cfg) {
+    if (!cfg) return null;
+    const entityOverride =
+      cfg.battery_soc_entity || cfg.battery_soc_id || cfg.soc_entity || cfg.soc_entity_id;
+    const attrOverride =
+      cfg.battery_soc_attribute || cfg.battery_soc_attr || cfg.soc_attribute || cfg.soc_attr;
+    let src = cfg.battery_soc || cfg.soc || cfg.soc_entity;
+    if (!src && entityOverride) {
+      src = { entity: entityOverride, attribute: attrOverride || null };
+    }
+    if (!src) return null;
+    const resolve = (val) => {
+      if (typeof val === "string") return { entity: val, attribute: null };
+      if (typeof val === "object" && val) {
+        const entity =
+          val.entity ||
+          val.entity_id ||
+          val.id ||
+          val.name ||
+          val.source ||
+          val.src ||
+          val.soc;
+        const attribute = val.attribute || val.attr || attrOverride || null;
+        if (entity) return { entity, attribute };
+      }
+      return null;
+    };
+    return resolve(src);
+  }
+
+  _getBatterySocEntity(cfg) {
+    const ref = this._getBatterySocRef(cfg);
+    return ref?.entity || null;
+  }
+
+  _getBatterySocValue(cfg) {
+    const ref = this._getBatterySocRef(cfg);
+    if (!ref || !ref.entity) return null;
+    const st = this.hass?.states?.[ref.entity];
+    if (!st) return null;
+    const raw = ref.attribute ? st.attributes?.[ref.attribute] : st.state;
+    const num = parseFloat(raw);
+    return Number.isFinite(num) ? num : null;
+  }
+
+  _toWatts(val, unit, allowNull = false) {
+    const n = typeof val === "number" ? val : parseFloat(val);
+    if (!Number.isFinite(n)) return allowNull ? null : 0;
+    const u = String(unit || "").toLowerCase();
+    if (u === "kw") return n * 1000;
+    if (u === "mw") return n * 1000000;
+    return n;
+  }
+
+  _fromWatts(val, unit) {
+    const u = String(unit || "").toLowerCase();
+    if (u === "kw") return val / 1000;
+    if (u === "mw") return val / 1000000;
+    return val;
+  }
+
+  _parseThreshold(val) {
+    const n = typeof val === "string" ? parseFloat(val) : val;
+    return Number.isFinite(n) ? n : null;
+  }
+
+  _parseNumberStrict(val) {
+    if (typeof val === "number") return Number.isFinite(val) ? val : null;
+    if (typeof val !== "string") return null;
+    const s = val.trim();
+    if (!s) return null;
+    if (!/^[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?$/.test(s)) return null;
+    const n = Number(s);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  _isUnavailableState(raw) {
+    const s = String(raw ?? "").toLowerCase();
+    return s === "unknown" || s === "unavailable";
+  }
+
+  _parseDecimalPlaces(val) {
+    const n = typeof val === "string" ? parseInt(val, 10) : val;
+    if (!Number.isFinite(n) || n < 0) return null;
+    return n;
+  }
+
+  _getCardDecimalPlaces() {
+    const parsed = this._parseDecimalPlaces(this._config?.decimal_places);
+    return parsed == null ? null : parsed;
+  }
+
+  _getDecimalPlaces(cfg) {
+    const parsed = this._parseDecimalPlaces(cfg?.decimal_places);
+    if (parsed != null) return parsed;
+    const cardLevel = this._getCardDecimalPlaces();
+    if (cardLevel != null) return cardLevel;
+    return 1;
+  }
+
+  _getUnitOverride(cfg) {
+    return cfg?.unit || cfg?.unit_of_measurement || null;
+  }
+
+  _opacityFor(value, threshold) {
+    if (!Number.isFinite(value)) return 1;
+    if (value === 0) return 0.4;
+    if (threshold == null) return 1;
+    return this._isThresholdSuppressed(value, threshold) ? 0.4 : 1;
+  }
+
+  _isThresholdSuppressed(value, threshold) {
+    if (!Number.isFinite(value) || !Number.isFinite(threshold)) return false;
+    if (threshold <= 0) return value <= threshold;
+    return Math.abs(value) < threshold;
+  }
+
+  _isBelowThreshold(value, threshold) {
+    return this._isThresholdSuppressed(value, threshold);
+  }
+
+  _getNumeric(entityId, attribute = null) {
+    if (!this.hass || !entityId) return 0;
+    const st = this.hass.states[entityId];
+    if (!st) return 0;
+    const raw = attribute ? st.attributes?.[attribute] : st.state;
+    const v = this._parseNumberStrict(raw);
+    return v == null ? 0 : v;
+  }
+
+  _getNumericMaybe(entityId, attribute = null) {
+    if (!this.hass || !entityId) return null;
+    const st = this.hass.states[entityId];
+    if (!st) return null;
+    const raw = attribute ? st.attributes?.[attribute] : st.state;
+    return this._parseNumberStrict(raw);
+  }
+
+  _getPowerMeta(entityId, unitOverride = null, attribute = null) {
+    const value = this._getNumeric(entityId, attribute);
+    const unit =
+      unitOverride ||
+      (entityId && this.hass?.states?.[entityId]?.attributes?.unit_of_measurement) ||
+      "";
+    return { value, unit, watts: this._toWatts(value, unit) };
+  }
+
+  _getDirectionalPowerMeta(importEntity, exportEntity) {
+    if (!this.hass) return { value: null, unit: "", watts: null };
+    const imp = importEntity ? this._getNumericMaybe(importEntity) : null;
+    const exp = exportEntity ? this._getNumericMaybe(exportEntity) : null;
+    if (imp == null && exp == null) return { value: null, unit: "", watts: null };
+    const unit =
+      (importEntity && this.hass?.states?.[importEntity]?.attributes?.unit_of_measurement) ||
+      (exportEntity && this.hass?.states?.[exportEntity]?.attributes?.unit_of_measurement) ||
+      "";
+    const value = (imp ?? 0) - (exp ?? 0);
+    const watts = this._toWatts(value, unit, true);
+    return { value, unit, watts };
+  }
+
+  _getGridPowerMeta(gridCfg, unitOverride = null) {
+    const importEntity = gridCfg?.import_entity || gridCfg?.importEntity || null;
+    const exportEntity = gridCfg?.export_entity || gridCfg?.exportEntity || null;
+    if (importEntity || exportEntity) {
+      return this._getDirectionalPowerMeta(exportEntity, importEntity);
+    }
+    return this._getPowerMeta(gridCfg?.entity, unitOverride);
+  }
+
+  _getBatteryPowerMeta(cfg) {
+    const chargeEntity = cfg?.charge_entity || cfg?.chargeEntity || null;
+    const dischargeEntity = cfg?.discharge_entity || cfg?.dischargeEntity || null;
+    if (chargeEntity || dischargeEntity) {
+      return this._getDirectionalPowerMeta(dischargeEntity, chargeEntity);
+    }
+    return null;
+  }
+
+  _setLineColor(lineId, color, active = false) {
+    const el = this.shadowRoot?.getElementById(lineId);
+    if (!el) return;
+    el.style.stroke = color;
+    el.style.strokeOpacity = active ? "1" : "0.15";
+    const allowGlow = this._allowGlowEffects();
+    el.style.filter = active && allowGlow ? `drop-shadow(0 0 6px ${color})` : "none";
+  }
+
+  _setHomeGradient(pvToHome, batteryToHome, gridToHome, pvColor, batteryColor, gridColor, homeColor) {
+    const gradient = this.shadowRoot?.getElementById("home-gradient");
+    const stop1 = this.shadowRoot?.getElementById("home-stop-1");
+    const stop2 = this.shadowRoot?.getElementById("home-stop-2");
+    const stop3 = this.shadowRoot?.getElementById("home-stop-3");
+    const stop4 = this.shadowRoot?.getElementById("home-stop-4");
+    const stop5 = this.shadowRoot?.getElementById("home-stop-5");
+    const stop6 = this.shadowRoot?.getElementById("home-stop-6");
+    if (!gradient || !stop1 || !stop2 || !stop3 || !stop4 || !stop5 || !stop6) return;
+
+    const entries = [
+      { key: "grid", value: gridToHome, color: gridColor, order: 0, line: { x1: 7, y1: 7, x2: 19, y2: 20 } },
+      { key: "pv", value: pvToHome, color: pvColor, order: 1, line: { x1: 12, y1: 3, x2: 12, y2: 20 } },
+      { key: "battery", value: batteryToHome, color: batteryColor, order: 2, line: { x1: 17, y1: 7, x2: 5, y2: 20 } },
+    ]
+      .filter((item) => item.value > 0)
+      .sort((a, b) => {
+        if (b.value !== a.value) return b.value - a.value;
+        return a.order - b.order;
+      });
+
+    const allEqualLine = { x1: 2, y1: 5, x2: 22, y2: 5 };
+    const approxEqual = (a, b) => Math.abs(a - b) <= 0.01;
+
+    let gradientLine = allEqualLine;
+    if (entries.length === 0) {
+      gradientLine = allEqualLine;
+    } else if (entries.length === 1) {
+      gradientLine = entries[0].line;
+    } else {
+      const raw = {
+        grid: gridToHome,
+        pv: pvToHome,
+        battery: batteryToHome,
+      };
+      const maxValue = Math.max(raw.grid, raw.pv, raw.battery);
+      const maxKeys = [
+        raw.grid > 0 && approxEqual(raw.grid, maxValue) ? "grid" : null,
+        raw.pv > 0 && approxEqual(raw.pv, maxValue) ? "pv" : null,
+        raw.battery > 0 && approxEqual(raw.battery, maxValue) ? "battery" : null,
+      ].filter(Boolean);
+
+      if (maxKeys.length === 3) {
+        gradientLine = allEqualLine;
+      } else {
+        const preferredKey =
+          maxKeys.includes("grid")
+            ? "grid"
+            : maxKeys.includes("pv")
+            ? "pv"
+            : "battery";
+        const selected = entries.find((item) => item.key === preferredKey) || entries[0];
+        gradientLine = selected.line;
+      }
+    }
+
+    const homeMarker = this.shadowRoot?.querySelector(".home-marker");
+    const winnerColor = entries[0]?.color || homeColor;
+    if (homeMarker) {
+      homeMarker.style.setProperty("--cpc-home-winner", winnerColor);
+    }
+    if (this._config?.disable_home_gradient) return;
+
+    gradient.setAttribute("x1", String(gradientLine.x1));
+    gradient.setAttribute("y1", String(gradientLine.y1));
+    gradient.setAttribute("x2", String(gradientLine.x2));
+    gradient.setAttribute("y2", String(gradientLine.y2));
+
+    const total = entries.reduce((sum, item) => sum + item.value, 0);
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const clampPct = (value) => `${clamp(value, 0, 100)}%`;
+    const blendWidth = 25;
+    const setStop = (el, offset, color) => {
+      el.setAttribute("offset", clampPct(offset));
+      el.setAttribute("stop-color", color);
+    };
+    const setStops = (stops) => {
+      stops.forEach((s) => setStop(s.el, s.offset, s.color));
+    };
+    const getOffsetPct = (el) => {
+      const raw = el.getAttribute("offset") || "0";
+      const num = parseFloat(raw);
+      return Number.isFinite(num) ? num : 0;
+    };
+
+    if (total <= 0) {
+      if (homeMarker) {
+        homeMarker.style.setProperty("--cpc-home-glow-1", homeColor);
+        homeMarker.style.setProperty("--cpc-home-glow-2", homeColor);
+        homeMarker.style.setProperty("--cpc-home-glow-3", homeColor);
+      }
+      setStops([
+        { el: stop1, offset: 0, color: homeColor },
+        { el: stop2, offset: 100, color: homeColor },
+        { el: stop3, offset: 100, color: homeColor },
+        { el: stop4, offset: 100, color: homeColor },
+        { el: stop5, offset: 100, color: homeColor },
+        { el: stop6, offset: 100, color: homeColor },
+      ]);
+      return;
+    }
+
+    const color1 = entries[0]?.color || homeColor;
+    const color2 = entries[1]?.color || color1;
+    const color3 = entries[2]?.color || color2;
+    const share1 = (entries[0]?.value / total) * 100;
+    const share2 = entries.length >= 2 ? ((entries[0].value + entries[1].value) / total) * 100 : share1;
+    let targetStops = [];
+    if (homeMarker) {
+      homeMarker.style.setProperty("--cpc-home-glow-1", color1);
+      homeMarker.style.setProperty("--cpc-home-glow-2", color2);
+      homeMarker.style.setProperty("--cpc-home-glow-3", color3);
+    }
+
+    if (entries.length === 1) {
+      targetStops = [
+        { el: stop1, offset: 0, color: color1 },
+        { el: stop2, offset: 100, color: color1 },
+        { el: stop3, offset: 100, color: color1 },
+        { el: stop4, offset: 100, color: color1 },
+        { el: stop5, offset: 100, color: color1 },
+        { el: stop6, offset: 100, color: color1 },
+      ];
+      setStops(targetStops);
+      return;
+    }
+
+    if (entries.length === 2) {
+      const halfBlend = Math.min(blendWidth / 2, share1, 100 - share1);
+      targetStops = [
+        { el: stop1, offset: 0, color: color1 },
+        { el: stop2, offset: share1 - halfBlend, color: color1 },
+        { el: stop3, offset: share1 + halfBlend, color: color2 },
+        { el: stop4, offset: 100, color: color2 },
+        { el: stop5, offset: 100, color: color2 },
+        { el: stop6, offset: 100, color: color2 },
+      ];
+    } else {
+      const halfBlend1 = Math.min(blendWidth / 2, share1, share2 - share1);
+      const halfBlend2 = Math.min(blendWidth / 2, 100 - share2, share2 - share1);
+      targetStops = [
+        { el: stop1, offset: 0, color: color1 },
+        { el: stop2, offset: share1 - halfBlend1, color: color1 },
+        { el: stop3, offset: share1 + halfBlend1, color: color2 },
+        { el: stop4, offset: share2 - halfBlend2, color: color2 },
+        { el: stop5, offset: share2 + halfBlend2, color: color3 },
+        { el: stop6, offset: 100, color: color3 },
+      ];
+    }
+
+    const offsetChanged = targetStops.some(
+      (s) => Math.abs(getOffsetPct(s.el) - s.offset) > 0.5
+    );
+    if (offsetChanged) {
+      const dominant = color1;
+      [stop1, stop2, stop3, stop4, stop5, stop6].forEach((el) => {
+        el.setAttribute("stop-color", dominant);
+      });
+      if (this._homeGradientFrame) cancelAnimationFrame(this._homeGradientFrame);
+      this._homeGradientFrame = requestAnimationFrame(() => {
+        setStops(targetStops);
+      });
+      return;
+    }
+    setStops(targetStops);
+  }
+
+  _updateFlows() {
+    if (!this._config || !this.hass) return;
+    if (!this.shadowRoot) {
+      this._pendingFlowUpdate = true;
+      return;
+    }
+    
+    const pvCfg = this._getEntityConfig("pv");
+    const gridCfg = this._getEntityConfig("grid");
+    const homeCfg = this._getEntityConfig("home");
+    const batteryRaw = this._getEntityConfig("battery");
+    const batteryList = Array.isArray(batteryRaw)
+      ? batteryRaw
+      : batteryRaw
+      ? [batteryRaw]
+      : [{ entity: null }];
+    const batteryCfg = batteryList[0] || { entity: null };
+    const hasBattery =
+      this._config?.entities &&
+      Object.prototype.hasOwnProperty.call(this._config.entities, "battery") &&
+      batteryList.some((b) =>
+        Boolean(
+          b?.entity ||
+            b?.charge_entity ||
+            b?.discharge_entity ||
+            b?.chargeEntity ||
+            b?.dischargeEntity
+        )
+      );
+    const pvInBatterySlot = !hasBattery && Boolean(pvCfg?.entity);
+    const thresholdMode = String(this._config?.threshold_mode || "calculations").toLowerCase();
+    const useThresholdForCalc = thresholdMode === "calculations";
+    const invertGrid = Boolean(gridCfg?.invert_state_values);
+    const invertBattery = Boolean(batteryCfg?.invert_state_values);
+    const gridUsesDirectional =
+      Boolean(gridCfg?.import_entity || gridCfg?.export_entity || gridCfg?.importEntity || gridCfg?.exportEntity);
+    const invertGridEffective = invertGrid && !gridUsesDirectional;
+    const pvLabels = this._normalizeLabels(pvCfg?.labels, null);
+    const gridLabelsRaw = this._normalizeLabels(gridCfg?.labels, null);
+    const batteryLabelsSource = Array.isArray(this._config?.entities?.battery)
+      ? this._config?.entities?.battery_labels || this._config?.entities?.battery?.labels
+      : batteryCfg?.labels;
+    const batteryLabels = this._normalizeLabels(batteryLabelsSource, null);
+    const hasAnyLabels = pvLabels.length > 0 || gridLabelsRaw.length > 0 || batteryLabels.length > 0;
+    const pvUnit =
+      this.hass?.states?.[pvCfg.entity]?.attributes?.unit_of_measurement ||
+      "";
+    const curvedLines = this._useCurvedLines();
+    const gridUnit =
+      this.hass?.states?.[gridCfg.entity]?.attributes?.unit_of_measurement ||
+      "";
+    const batteryUnit =
+      this.hass?.states?.[batteryCfg.entity]?.attributes?.unit_of_measurement ||
+      "";
+    const homeUnit =
+      this.hass?.states?.[homeCfg.entity]?.attributes?.unit_of_measurement ||
+      "";
+
+    const applyThreshold = (value, threshold) => {
+      if (threshold == null) return value;
+      return this._isThresholdSuppressed(value, threshold) ? 0 : value;
+    };
+
+    const pvThreshold = this._toWatts(this._parseThreshold(pvCfg.threshold), "W", true);
+    const gridThreshold = this._toWatts(this._parseThreshold(gridCfg.threshold), "W", true);
+    const batteryThreshold = null; // thresholds applied per battery above
+
+    const pvMeta = this._getPowerMeta(pvCfg.entity, pvUnit);
+    const gridMeta = this._getGridPowerMeta(gridCfg, gridUnit);
+    let batteryComputed = [];
+    const batteryItems = batteryList.map((b) => {
       const meta = this._getBatteryPowerMeta(b);
       const unit =
         meta?.unit ||
@@ -1704,43 +3392,6 @@ const batteryItems = batteryList.map((b) => {
           : null;
     }
 
-    const gridImportEntity = gridCfg?.import_entity || gridCfg?.importEntity;
-    const gridExportEntity = gridCfg?.export_entity || gridCfg?.exportEntity;
-    const gridHasBothDirectional = Boolean(gridImportEntity && gridExportEntity);
-    let gridValDisplay = null;
-    if (gridHasBothDirectional) {
-      const importUnit =
-        this.hass?.states?.[gridImportEntity]?.attributes?.unit_of_measurement || gridUnitRaw;
-      const exportUnit =
-        this.hass?.states?.[gridExportEntity]?.attributes?.unit_of_measurement || gridUnitRaw;
-      const importNum = this._getNumeric(gridImportEntity);
-      const exportNum = this._getNumeric(gridExportEntity);
-      const gridImportW = gridMeta?.importWatts ?? this._toWatts(importNum, importUnit);
-      const gridExportW = gridMeta?.exportWatts ?? this._toWatts(exportNum, exportUnit);
-      const gridImportFormatted = this._formatPowerWithOverride(
-        Math.abs(gridImportW),
-        gridDecimals,
-        gridDisplayUnit,
-        gridUnitOverride ?? null
-      );
-      const gridExportFormatted = this._formatPowerWithOverride(
-        Math.abs(gridExportW),
-        gridDecimals,
-        gridDisplayUnit,
-        gridUnitOverride ?? null
-      );
-
-      gridValDisplay = html`
-        <span style="display: inline-flex; align-items: center; gap: 4px;">
-          <ha-icon class="inline-icon" icon="mdi:arrow-right" style="color:${gridColor}; opacity:${gridOpacity};"></ha-icon>
-          ${renderValue(gridImportFormatted)}
-          <span style="margin: 0 2px; opacity: 0.5;">|</span>
-          <ha-icon class="inline-icon" icon="mdi:arrow-left" style="color:${gridColor}; opacity:${gridOpacity};"></ha-icon>
-          ${renderValue(gridExportFormatted)}
-        </span>
-      `;
-    }
-
     const inferredHomeUnit =
       pvUnitRaw || gridUnitRaw || batteryUnitRaw || homeUnitOverride || "W";
     const homeUnit = "W";
@@ -1881,55 +3532,6 @@ const batteryItems = batteryList.map((b) => {
       : battValDisplay;
     const battArrow =
       battDisplay > 0 ? "mdi:arrow-left" : battDisplay < 0 ? "mdi:arrow-right" : null;
-
-    const mainChargeEnt = batteryCfg?.charge_entity || batteryCfg?.chargeEntity;
-    const mainDischargeEnt = batteryCfg?.discharge_entity || batteryCfg?.dischargeEntity;
-    const mainHasBothDirectional = Boolean(mainChargeEnt && mainDischargeEnt);
-    let dualBattValDisplay = null;
-    if (mainHasBothDirectional) {
-      const mainChargeUnit =
-        this.hass?.states?.[mainChargeEnt]?.attributes?.unit_of_measurement || battUnit;
-      const mainDischargeUnit =
-        this.hass?.states?.[mainDischargeEnt]?.attributes?.unit_of_measurement || battUnit;
-      const mainChargeW = this._toWatts(this._getNumeric(mainChargeEnt), mainChargeUnit);
-      const mainDischargeW = this._toWatts(this._getNumeric(mainDischargeEnt), mainDischargeUnit);
-      const mainChargeFormatted = this._formatPowerWithOverride(
-        Math.abs(mainChargeW),
-        batteryDecimals,
-        battUnit,
-        batteryUnitOverride ?? null
-      );
-      const mainDischargeFormatted = this._formatPowerWithOverride(
-        Math.abs(mainDischargeW),
-        batteryDecimals,
-        battUnit,
-        batteryUnitOverride ?? null
-      );
-
-      dualBattValDisplay = html`
-        <span style="display: inline-flex; align-items: center; gap: 4px;">
-          <ha-icon class="inline-icon" icon="mdi:arrow-right" style="color:${batteryColor}; opacity:1;"></ha-icon>
-          ${renderValue(mainChargeFormatted)}
-          <span style="margin: 0 2px; opacity: 0.5;">|</span>
-          <ha-icon class="inline-icon" icon="mdi:arrow-left" style="color:${batteryColor}; opacity:1;"></ha-icon>
-          ${renderValue(mainDischargeFormatted)}
-          ${batterySocDisplay != null
-            ? html`<span style="margin: 0 2px; opacity: 0.5;">|</span>${
-                batterySocClickable
-                  ? html`<span
-                      class="clickable"
-                      @click=${(ev) => {
-                        ev.stopPropagation();
-                        this._openMoreInfo(batterySocEntity);
-                      }}
-                    ><span class="value-number">${batterySocDisplay}</span><span class="value-unit">%</span></span>`
-                  : html`<span class="value-number">${batterySocDisplay}</span><span class="value-unit">%</span>`
-              }`
-            : ""}
-        </span>
-      `;
-    }
-
     const batteryIcon = Number.isFinite(batterySocPrimary)
       ? this._getBatteryIcon(batterySocPrimary)
       : battDisplay < 0
@@ -2152,7 +3754,6 @@ const batteryItems = batteryList.map((b) => {
     const gridLabelItems = gridLabels.slice(0, gridLabelCount).map((lbl, idx) => {
       const entity = lbl.entity || null;
       const attribute = lbl.attribute || null;
-      const name = lbl.name || null;
       const unitOverride = this._getUnitOverride(lbl);
       const icon = lbl.icon || this._getLabelIcon(entity, attribute, "mdi:tag-text-outline");
       const color = lbl.color || gridColor;
@@ -2187,7 +3788,6 @@ const batteryItems = batteryList.map((b) => {
       const pos = gridLabelPositions[idx] || gridLabelPositions[gridLabelPositions.length - 1];
       return {
         entity,
-        name,
         icon,
         color,
         val,
@@ -2213,7 +3813,6 @@ const batteryItems = batteryList.map((b) => {
     const batteryLabelItems = batteryLabelSource.slice(0, batteryLabelCount).map((lbl, idx) => {
       const entity = lbl.entity || null;
       const attribute = lbl.attribute || null;
-      const name = lbl.name || null;
       const unitOverride = this._getUnitOverride(lbl);
       const icon = lbl.icon || this._getLabelIcon(entity, attribute, "mdi:tag-text-outline");
       const color = lbl.color || batteryLabelDefaultColor;
@@ -2246,7 +3845,6 @@ const batteryItems = batteryList.map((b) => {
       const pos = batteryLabelPositions[idx] || batteryLabelPositions[batteryLabelPositions.length - 1];
       return {
         entity,
-        name,
         icon,
         color,
         val,
@@ -2349,7 +3947,7 @@ const batteryItems = batteryList.map((b) => {
         ? batteryComputed
             .map((item) => {
               const cfg = item.cfg || {};
-              const entity = cfg.entity || cfg.charge_entity || cfg.discharge_entity || cfg.chargeEntity || cfg.dischargeEntity || null;
+              const entity = cfg.entity || null;
               if (!entity) return null;
               const unitOverride = this._getUnitOverride(cfg);
               const decimals = this._getDecimalPlaces(cfg);
@@ -2372,55 +3970,6 @@ const batteryItems = batteryList.map((b) => {
               const threshold = item.threshold;
               const opacity = this._opacityFor(numericW, threshold);
               const hidden = this._isBelowThreshold(numericW, threshold);
-
-              const bChargeEnt = cfg.charge_entity || cfg.chargeEntity;
-              const bDischargeEnt = cfg.discharge_entity || cfg.dischargeEntity;
-              const bHasBoth = Boolean(bChargeEnt && bDischargeEnt);
-              let bValNode = null;
-              if (bHasBoth) {
-                const bChargeUnit =
-                  this.hass?.states?.[bChargeEnt]?.attributes?.unit_of_measurement || "W";
-                const bDischargeUnit =
-                  this.hass?.states?.[bDischargeEnt]?.attributes?.unit_of_measurement || "W";
-                const bChargeW = this._toWatts(this._getNumeric(bChargeEnt), bChargeUnit);
-                const bDischargeW = this._toWatts(this._getNumeric(bDischargeEnt), bDischargeUnit);
-                const bChargeFormatted = this._formatPowerWithOverride(
-                  Math.abs(bChargeW),
-                  decimals,
-                  "W",
-                  unitOverride ?? null
-                );
-                const bDischargeFormatted = this._formatPowerWithOverride(
-                  Math.abs(bDischargeW),
-                  decimals,
-                  "W",
-                  unitOverride ?? null
-                );
-
-                bValNode = html`
-                  <span style="display: inline-flex; align-items: center; gap: 2px;">
-                    <ha-icon class="inline-icon" icon="mdi:arrow-right" style="color:${color}; opacity:1; --mdc-icon-size: calc(12px * var(--cpc-scale, 1));"></ha-icon>
-                    ${renderValue(bChargeFormatted)}
-                    <span style="margin: 0 1px; opacity: 0.5;">|</span>
-                    <ha-icon class="inline-icon" icon="mdi:arrow-left" style="color:${color}; opacity:1; --mdc-icon-size: calc(12px * var(--cpc-scale, 1));"></ha-icon>
-                    ${renderValue(bDischargeFormatted)}
-                    ${Number.isFinite(soc)
-                      ? html`<span style="margin: 0 1px; opacity: 0.5;">|</span>${
-                          socEntity
-                            ? html`<span
-                                class="clickable"
-                                @click=${(ev) => {
-                                  ev.stopPropagation();
-                                  this._openMoreInfo(socEntity);
-                                }}
-                              ><span class="value-number">${Math.round(soc)}</span><span class="value-unit">%</span></span>`
-                            : html`<span class="value-number">${Math.round(soc)}</span><span class="value-unit">%</span>`
-                        }`
-                      : ""}
-                  </span>
-                `;
-              }
-
               const displayVal = Number.isFinite(wattsForDisplay)
                 ? this._formatPowerWithOverride(
                     Math.abs(wattsForDisplay),
@@ -2455,8 +4004,7 @@ const batteryItems = batteryList.map((b) => {
                 icon,
                 color,
                 val: displayText,
-                hasBoth: bHasBoth,
-                valNode: bValNode || displayValBold,
+                valNode: displayValBold,
                 opacity,
                 arrow,
                 hidden,
@@ -2557,7 +4105,7 @@ const batteryItems = batteryList.map((b) => {
                 <div class="aux-marker pv-label-marker clickable" @click=${() => this._openMoreInfo(lbl.entity || null)}>
                 <ha-icon icon="${lbl.icon}" style="gap: 0px; color:${lbl.color}; opacity:1; --mdc-icon-size: calc(18px * var(--cpc-scale, 1)); filter:${allowGlow && lbl.numeric !== 0 ? `drop-shadow(0 0 8px ${lbl.color})` : "none"};"></ha-icon>
                   <div class="aux-label" style="margin-top: -6px; padding-bottom: 0px; color:${lbl.color}; opacity:${lbl.hidden ? 0.35 : lbl.opacity};">${renderValue(lbl.val)}</div>
-                  ${lbl.name
+                  ${showPvLabelNames && lbl.name
                     ? html`<div class="aux-sub-label" style="color:${lbl.color}; opacity:${lbl.hidden ? 0.35 : lbl.opacity};">${lbl.name}</div>`
                     : ""}
                 </div>
@@ -2567,10 +4115,7 @@ const batteryItems = batteryList.map((b) => {
               (lbl) => html`<div class="overlay-item anchor-left" style="left:${lbl.xPct}%; top:${lbl.yPx}px;">
                 <div class="aux-marker clickable" style="flex-direction: row; gap: 4px;" @click=${() => this._openMoreInfo(lbl.entity || null)}>
                   <ha-icon icon="${lbl.icon}" style="color:${lbl.color}; opacity:1; --mdc-icon-size: calc(16px * var(--cpc-scale, 1)); filter:${allowGlow && lbl.numeric !== 0 ? `drop-shadow(0 0 8px ${lbl.color})` : "none"};"></ha-icon>
-                  <div style="display: flex; flex-direction: column;">
-                    <div class="aux-label" style="color:${lbl.color}; opacity:${lbl.hidden ? 0.35 : lbl.opacity};">${renderValue(lbl.val)}</div>
-                    ${lbl.name ? html`<div class="aux-sub-label" style="color:${lbl.color}; opacity:${lbl.hidden ? 0.35 : lbl.opacity};">${lbl.name}</div>` : ""}
-                  </div>
+                  <div class="aux-label" style="color:${lbl.color}; opacity:${lbl.hidden ? 0.35 : lbl.opacity};">${renderValue(lbl.val)}</div>
                 </div>
               </div>`
             )}
@@ -2578,10 +4123,7 @@ const batteryItems = batteryList.map((b) => {
               ? batteryLabelItems.map(
                   (lbl) => html`<div class="overlay-item anchor-right battery-label" style="margin-right: 10px; left:${lbl.xPct}%; top:${lbl.yPx}px;">
                     <div class="aux-marker clickable" style="flex-direction: row; gap: 4px;" @click=${() => this._openMoreInfo(lbl.entity || null)}>
-                      <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                        <div class="aux-label" style="color:${lbl.color}; opacity:${lbl.hidden ? 0.35 : lbl.opacity};">${renderValue(lbl.val)}</div>
-                        ${lbl.name ? html`<div class="aux-sub-label" style="color:${lbl.color}; opacity:${lbl.hidden ? 0.35 : lbl.opacity};">${lbl.name}</div>` : ""}
-                      </div>
+                      <div class="aux-label" style="color:${lbl.color}; opacity:${lbl.hidden ? 0.35 : lbl.opacity};">${renderValue(lbl.val)}</div>
                       <ha-icon icon="${lbl.icon}" style="color:${lbl.color}; opacity:1; --mdc-icon-size: calc(16px * var(--cpc-scale, 1)); filter:${allowGlow && lbl.numeric !== 0 ? `drop-shadow(0 0 8px ${lbl.color})` : "none"};"></ha-icon>
                     </div>
                   </div>`
@@ -2643,14 +4185,10 @@ const batteryItems = batteryList.map((b) => {
                   class="node-label left ${gridLabelFlicker ? "label-flicker" : ""}"
                   style="color:${gridColor}; --label-opacity:${gridLabelHidden ? 0.35 : gridOpacity}; opacity: var(--label-opacity);"
                 >
-                  ${gridHasBothDirectional
-                    ? gridValDisplay
-                    : html`
-                        ${gridArrow && !gridLabelHidden
-                          ? html`<ha-icon class="inline-icon" icon="${gridArrow}" style="color:${gridColor}; opacity:${gridOpacity};"></ha-icon>`
-                          : ""}
-                        <span style="opacity:${gridOpacity};">${renderValue(gridVal)}</span>
-                      `}
+                  ${gridArrow && !gridLabelHidden
+                    ? html`<ha-icon class="inline-icon" icon="${gridArrow}" style="color:${gridColor}; opacity:${gridOpacity};"></ha-icon>`
+                    : ""}
+                  <span style="opacity:${gridOpacity};">${renderValue(gridVal)}</span>
                 </div>
               </div>
             </div>
@@ -2695,13 +4233,16 @@ const batteryItems = batteryList.map((b) => {
               </div>
             </div>
             ${enableDevicePowerLines && hasDeviceSources && deviceUsageActive
-              ? html`<div class="overlay-item device-power-dot-wrapper" style="left:${(homeCenterX/baseWidth)*100}\%; top: calc(${deviceJunctionTopPct}% + 4px);">
+              ? html`<div class="overlay-item device-power-dot-wrapper" style="left:${(homeCenterX/baseWidth)*100}%; top: calc(${deviceJunctionTopPct}% + 4px);">
                   <div class="device-power-dot ${deviceUsageActive ? "active" : ""}" style="color:${homeColor};${deviceUsageActive ? `animation-duration:${devicePulseSeconds.toFixed(2)}s;` : ""}"></div>
                 </div>`
               : ""}
             ${hasBattery
-              ? html`<div class="overlay-item anchor-right battery-section" style="left:${(batteryIconX/baseWidth)*100}\%; top:${batteryIconTop}px;">
-                  <div class="node-marker battery-marker right ${batteryDetails.length ? "" : "clickable"}" @click=${() => {                     if (!batteryDetails.length) this._handleTapAction(batteryCfg, batteryCfg.entity);                   }}>${hasBatteryIconOverride && batteryIconPath
+              ? html`<div class="overlay-item anchor-right battery-section" style="left:${(batteryIconX/baseWidth)*100}%; top:${batteryIconTop}px;">
+                  <div class="node-marker battery-marker right ${batteryDetails.length ? "" : "clickable"}" @click=${() => {
+                    if (!batteryDetails.length) this._handleTapAction(batteryCfg, batteryCfg.entity);
+                  }}>
+                    ${hasBatteryIconOverride && batteryIconPath
                       ? html`<div class="battery-icon-wrap custom" style="--cpc-battery-icon-stroke:${batteryColor}; opacity:${batteryIconOpacity}; filter:${allowGlow && battNumericW !== 0 ? `drop-shadow(0 0 10px ${batteryColor})` : "none"};">
                           <div class="battery-icon-circle"></div>
                           <svg class="battery-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -2713,21 +4254,17 @@ const batteryItems = batteryList.map((b) => {
                       class="node-label right ${batteryLabelFlicker ? "label-flicker" : ""}"
                       style="color:${batteryColor}; --label-opacity:${batteryLabelHidden ? 0.35 : batteryLabelOpacity}; opacity: var(--label-opacity);"
                     >
-                      ${mainHasBothDirectional
-                        ? dualBattValDisplay
-                        : html`
-                            ${battArrow && !batteryLabelHidden
-                              ? html`<ha-icon class="inline-icon" icon="${battArrow}" style="color:${batteryColor}; opacity:1;"></ha-icon>`
-                              : ""}
-                            <span style="opacity:1;">${battValNode}</span>
-                          `}
+                      ${battArrow && !batteryLabelHidden
+                        ? html`<ha-icon class="inline-icon" icon="${battArrow}" style="color:${batteryColor}; opacity:1;"></ha-icon>`
+                        : ""}
+                      <span style="opacity:1;">${battValNode}</span>
                     </div>
                   </div>
                 </div>`
               : ""}
             <div id="icon-probe" style="display:none;"></div>
             ${batteryDetails.length
-              ? html`<div class="overlay-item anchor-right-top" style="left:${batteryDetailsLeft}\%; top:${batteryDetailsTopPx}px;">
+              ? html`<div class="overlay-item anchor-right-top" style="left:${batteryDetailsLeft}%; top:${batteryDetailsTopPx}px;">
                   <div class="battery-multi" style="margin-right: 6px; margin-top: 6px;">
                     ${batteryDetails.map(
                       (b) => html`<div
@@ -2736,7 +4273,7 @@ const batteryItems = batteryList.map((b) => {
                         @click=${() => this._handleTapAction(b.cfg, b.entity)}
                       >
                         <div class="aux-label" style="padding-top: 0px; padding-bottom: 0px; margin-top: 4px; padding-left: 1px; padding-right: 1px; opacity:${b.hidden ? 0.35 : b.opacity};">
-                          ${!b.hasBoth && b.arrow && !b.hidden
+                          ${b.arrow && !b.hidden
                             ? html`<ha-icon class="inline-icon" icon="${b.arrow}" style="color:${b.color}; opacity:1; --mdc-icon-size: calc(12px * var(--cpc-scale, 1));"></ha-icon>`
                             : ""}
                           ${b.valNode || renderValue(b.val)}
@@ -2749,7 +4286,7 @@ const batteryItems = batteryList.map((b) => {
               : ""}
 
             ${sources.map(
-              (src) => html`<div class="overlay-item" style="left:${src.leftPct}\%; top:${src.topPct}%; transform: translate(-50%, -50%);">
+              (src) => html`<div class="overlay-item" style="left:${src.leftPct}%; top:${src.topPct}%; transform: translate(-50%, -50%);">
                 <div class="aux-marker">
                   ${showDeviceNames && src.name
                     ? html`<div class="device-name" style="color:${src.color};">${src.name}</div>`

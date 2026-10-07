@@ -1663,8 +1663,8 @@ class CompactPowerCard extends CompactPowerCardBase {
 	if (ents.grid?.import_entity || ents.grid?.importEntity) {
 	  add(this._extractEntityRef(ents.grid?.import_entity || ents.grid?.importEntity));
 	}
-	if (ents.grid?.export_entity || ens.grid?.exportEntity) {
-	  add(this._extractEntityRef(ents.grid?.export_entity || ens.grid?.exportEntity));
+	if (ents.grid?.export_entity || ents.grid?.exportEntity) {
+	  add(this._extractEntityRef(ents.grid?.export_entity || ents.grid?.exportEntity));
 	}
 
     const pvLabels = this._normalizeLabels(ents.pv?.labels, null);
@@ -1697,8 +1697,8 @@ class CompactPowerCard extends CompactPowerCardBase {
 		if (ents.battery?.charge_entity || ents.battery?.chargeEntity) {
 		  add(this._extractEntityRef(ents.battery?.charge_entity || ents.battery?.chargeEntity));
 		}
-		if (ents.battery?.discharge_entity || ens.battery?.dischargeEntity) {
-		  add(this._extractEntityRef(ents.battery?.discharge_entity || ens.battery?.dischargeEntity));
+		if (ents.battery?.discharge_entity || ents.battery?.dischargeEntity) {
+		  add(this._extractEntityRef(ents.battery?.discharge_entity || ents.battery?.dischargeEntity));
 		}
       const socRef =
         this._extractEntityRef(cfg?.battery_soc) ||

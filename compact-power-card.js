@@ -297,7 +297,11 @@ class CompactPowerCard extends CompactPowerCardBase {
                       show_soc: {
                         label: "Show SoC Label?",
                         selector: { boolean: {} } 
-                      },                                           
+                      },
+                      export_to_grid_animation: {
+                        label: "Animate Battery Export to Grid?",
+                        selector: { boolean: {} },
+                      },
                       invert_state_values: {
                         label: "Invert State Values?",
                         selector: { boolean: {} } 
@@ -2350,6 +2354,15 @@ class CompactPowerCard extends CompactPowerCardBase {
     return null;
   }
 
+  _getBatteryToGridAnimationMagnitude(calculated, discharge, gridExport, batteryList) {
+    const configured = batteryList
+      .map((cfg) => cfg?.export_to_grid_animation ?? cfg?.exportToGridAnimation)
+      .find((value) => value !== undefined && value !== null);
+    if (configured === undefined) return calculated;
+    if (!this._coerceBoolean(configured, false)) return 0;
+    return Math.max(calculated, Math.min(discharge, gridExport));
+  }
+
   _getDirectionalDisplayValues(cfg, directions) {
     if (String(this._getUnitOverride(cfg) || "").trim().toLowerCase() !== "kwh") return null;
     if (!directions.every(({ key, alias }) => cfg?.[key] || cfg?.[alias])) return null;
@@ -2954,6 +2967,12 @@ class CompactPowerCard extends CompactPowerCardBase {
     homeNeed -= batteryToHome;
     const battDischargeAfterHome = Math.max(battDischarge - batteryToHome, 0);
     const batteryToGrid = Math.min(battDischargeAfterHome, Math.max(gridExport - pvToGrid, 0));
+    const batteryToGridAnimation = this._getBatteryToGridAnimationMagnitude(
+      batteryToGrid,
+      battDischarge,
+      gridExport,
+      batteryList
+    );
 
     // Grid import → remaining home, then remaining battery charge
     const gridToHome = Math.min(gridImport, homeNeed);
@@ -3000,10 +3019,10 @@ class CompactPowerCard extends CompactPowerCardBase {
         magnitude: batteryToHome,
         color: batteryColor,
       };
-    if (batteryToGrid > threshold)
+    if (batteryToGridAnimation > threshold)
       active["battery-grid"] = {
         geom: geom["battery-grid"],
-        magnitude: batteryToGrid,
+        magnitude: batteryToGridAnimation,
         color: batteryColor,
       };
 

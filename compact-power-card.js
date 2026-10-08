@@ -776,7 +776,7 @@ class CompactPowerCard extends CompactPowerCardBase {
       .grid-section .grid-marker,
       .battery-section .battery-marker {
         position: relative;
-        padding-top: calc(16px * var(--cpc-scale, 1) + 10px);
+        padding-top: calc(16px * var(--cpc-scale, 1) + 7px);
       }
 
       .grid-section .grid-marker > ha-icon,
@@ -938,10 +938,19 @@ class CompactPowerCard extends CompactPowerCardBase {
         --mdc-icon-size: calc(12px * var(--cpc-scale, 1));
       }
 
+      .grid-section .node-label > ha-icon.inline-icon,
+      .battery-section .node-label > ha-icon.inline-icon {
+        width: calc(12px * var(--cpc-scale, 1));
+        height: calc(12px * var(--cpc-scale, 1));
+        flex: 0 0 auto;
+        align-self: center;
+        --mdc-icon-size: calc(12px * var(--cpc-scale, 1));
+      }
+
       .directional-values {
         display: flex;
         flex-direction: column;
-        gap: 3px;
+        gap: 6px;
       }
 
       .node-label.right .directional-values {
@@ -960,6 +969,8 @@ class CompactPowerCard extends CompactPowerCardBase {
       .directional-value ha-icon {
         width: calc(12px * var(--cpc-scale, 1));
         height: calc(12px * var(--cpc-scale, 1));
+        flex: 0 0 auto;
+        align-self: center;
         --mdc-icon-size: calc(12px * var(--cpc-scale, 1));
       }
 
@@ -1080,13 +1091,19 @@ class CompactPowerCard extends CompactPowerCardBase {
         display: flex;
         align-items: baseline;
         gap: 3px;
+        font-size: calc(11px * var(--cpc-scale, 1) * var(--cpc-text-scale, 1));
         line-height: 1;
         white-space: nowrap;
+      }
+
+      .aux-inline-label .value-unit {
+        font-size: 1em;
       }
 
       .side-label-marker ha-icon {
         width: calc(16px * var(--cpc-scale, 1));
         height: calc(16px * var(--cpc-scale, 1));
+        transform: translateY(-3px);
       }
 
       .aux-inline-label .label-name {
@@ -2263,7 +2280,7 @@ class CompactPowerCard extends CompactPowerCardBase {
 
   _opacityFor(value, threshold) {
     if (!Number.isFinite(value)) return 1;
-    if (value === 0) return 0.4;
+    if (value === 0) return 1;
     if (threshold == null) return 1;
     return this._isThresholdSuppressed(value, threshold) ? 0.4 : 1;
   }
@@ -2275,6 +2292,7 @@ class CompactPowerCard extends CompactPowerCardBase {
   }
 
   _isBelowThreshold(value, threshold) {
+    if (value === 0) return false;
     return this._isThresholdSuppressed(value, threshold);
   }
 
@@ -3891,7 +3909,7 @@ class CompactPowerCard extends CompactPowerCardBase {
       const threshold = this._toWatts(this._parseThreshold(lbl.threshold), "W", true);
       const opacity =
         isPowerEntity && hasNumeric
-          ? (numericW === 0 ? 1 : this._opacityFor(numericW, threshold))
+          ? this._opacityFor(numericW, threshold)
           : 1;
       const hidden =
         isPowerEntity && hasNumeric ? this._isBelowThreshold(numericW, threshold) : false;
@@ -4034,7 +4052,7 @@ class CompactPowerCard extends CompactPowerCardBase {
         const threshold = this._toWatts(this._parseThreshold(lbl.threshold), "W", true);
         const opacity =
           isPowerEntity && hasNumeric
-            ? (numericW === 0 ? 1 : this._opacityFor(numericW, threshold))
+            ? this._opacityFor(numericW, threshold)
             : 1;
         const hidden =
           isPowerEntity && hasNumeric ? this._isBelowThreshold(numericW, threshold) : false;

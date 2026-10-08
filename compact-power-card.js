@@ -948,10 +948,8 @@ class CompactPowerCard extends CompactPowerCardBase {
         display: inline-block;
         font-size: 0.75em;
         line-height: 1;
-        width: 0.5em;
         margin-right: 2px;
-        transform: translateY(-2px) scaleX(0.5);
-        transform-origin: left center;
+        transform: translateY(-2px);
       }
 
       .directional-values {
@@ -3485,7 +3483,7 @@ class CompactPowerCard extends CompactPowerCardBase {
         ? html`<span class="value-unit">${rest}</span>`
         : ""}`;
     };
-    const renderFlowArrow = (icon) => html`<span class="flow-arrow" aria-hidden="true">${icon === "mdi:arrow-left" ? "←" : "→"}</span>`;
+    const renderFlowArrow = (icon) => html`<span class="flow-arrow" aria-hidden="true">${icon === "mdi:arrow-left" ? "\u2B60" : "\u2B62"}</span>`;
     const renderDirectionalValues = (values) => html`<span class="directional-values">${values.map(
       (item) => html`<span class="directional-value clickable" aria-label="${item.name}: ${item.value}" @click=${(ev) => {
         ev.stopPropagation();
@@ -3497,8 +3495,8 @@ class CompactPowerCard extends CompactPowerCardBase {
     )}</span>`;
     const gridState = this.hass?.states?.[gridCfg.entity]?.state;
     const gridDirectionalValues = this._getDirectionalDisplayValues(gridCfg, [
-      { key: "import_entity", alias: "importEntity", name: "Import", arrow: "mdi:arrow-left" },
-      { key: "export_entity", alias: "exportEntity", name: "Export", arrow: "mdi:arrow-right" },
+      { key: "import_entity", alias: "importEntity", name: "Import", arrow: "mdi:arrow-right" },
+      { key: "export_entity", alias: "exportEntity", name: "Export", arrow: "mdi:arrow-left" },
     ]);
     let gridVal = Number.isFinite(gridNumericW)
       ? this._formatPowerWithOverride(Math.abs(gridNumericW), gridDecimals, gridDisplayUnit, gridUnitOverride ?? null)

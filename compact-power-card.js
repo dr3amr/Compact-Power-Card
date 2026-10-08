@@ -811,7 +811,7 @@ class CompactPowerCard extends CompactPowerCardBase {
 
       .grid-section .node-label.directional-readout,
       .battery-section .node-label.directional-readout {
-        transform: translateY(-3px);
+        transform: translateY(-6px);
       }
 
       .pv-icon-wrap {
@@ -948,8 +948,10 @@ class CompactPowerCard extends CompactPowerCardBase {
         display: inline-block;
         font-size: 0.75em;
         line-height: 1;
+        width: 0.5em;
         margin-right: 2px;
-        transform: translateY(-2px);
+        transform: translateY(-2px) scaleX(0.5);
+        transform-origin: left center;
       }
 
       .directional-values {

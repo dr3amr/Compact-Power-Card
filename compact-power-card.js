@@ -765,6 +765,44 @@ class CompactPowerCard extends CompactPowerCardBase {
         gap: 0;
       }
 
+      .overlay-item.grid-section.anchor-left {
+        transform: translate(0, 0);
+      }
+
+      .overlay-item.battery-section.anchor-right {
+        transform: translate(-100%, 0);
+      }
+
+      .grid-section .grid-marker,
+      .battery-section .battery-marker {
+        position: relative;
+        padding-top: calc(16px * var(--cpc-scale, 1) + 10px);
+      }
+
+      .grid-section .grid-marker > ha-icon,
+      .grid-section .grid-marker > .grid-icon-wrap,
+      .battery-section .battery-marker > ha-icon,
+      .battery-section .battery-marker > .battery-icon-wrap {
+        position: absolute;
+        top: calc(-16px * var(--cpc-scale, 1));
+        margin-top: 0;
+      }
+
+      .grid-section .grid-marker > ha-icon,
+      .grid-section .grid-marker > .grid-icon-wrap {
+        left: 0;
+      }
+
+      .battery-section .battery-marker > ha-icon,
+      .battery-section .battery-marker > .battery-icon-wrap {
+        right: 0;
+      }
+
+      .grid-section .node-label,
+      .battery-section .node-label {
+        margin-top: 0;
+      }
+
       .pv-icon-wrap {
         position: relative;
         width: calc(32px * var(--cpc-scale, 1));
@@ -898,7 +936,7 @@ class CompactPowerCard extends CompactPowerCardBase {
       .directional-values {
         display: flex;
         flex-direction: column;
-        gap: 0;
+        gap: 3px;
       }
 
       .node-label.right .directional-values {
@@ -918,11 +956,6 @@ class CompactPowerCard extends CompactPowerCardBase {
         width: calc(12px * var(--cpc-scale, 1));
         height: calc(12px * var(--cpc-scale, 1));
         --mdc-icon-size: calc(12px * var(--cpc-scale, 1));
-      }
-
-      .directional-name {
-        font-size: calc(10px * var(--cpc-scale, 1) * var(--cpc-text-scale, 1));
-        font-weight: 500;
       }
 
       .home-marker {
@@ -3425,12 +3458,11 @@ class CompactPowerCard extends CompactPowerCardBase {
         : ""}`;
     };
     const renderDirectionalValues = (values) => html`<span class="directional-values">${values.map(
-      (item) => html`<span class="directional-value clickable" @click=${(ev) => {
+      (item) => html`<span class="directional-value clickable" aria-label="${item.name}: ${item.value}" @click=${(ev) => {
         ev.stopPropagation();
         this._openMoreInfo(item.entity);
       }}>
         <ha-icon class="inline-icon" icon="${item.arrow}"></ha-icon>
-        <span class="directional-name">${item.name}</span>
         <span>${renderValue(item.value)}</span>
       </span>`
     )}</span>`;
@@ -3815,7 +3847,7 @@ class CompactPowerCard extends CompactPowerCardBase {
     const gridLabelCount = Math.min(gridLabels.length, gridLabelMax);
     const gridLabelPositions = Array.from({ length: gridLabelCount }, (_, idx) => ({
       xPct: ((gridIconX + 6) / baseWidth) * 100,
-      yPx: gridNodeY - 30 - (18 * idx),
+      yPx: gridNodeY - 22 - (18 * idx),
     }));
     const gridLabelItems = gridLabels.slice(0, gridLabelCount).map((lbl, idx) => {
       const entity = lbl.entity || null;
@@ -3876,7 +3908,7 @@ class CompactPowerCard extends CompactPowerCardBase {
     const batteryLabelCount = Math.min(batteryLabelSource.length, batteryLabelMax);
     const batteryLabelPositions = Array.from({ length: batteryLabelCount }, (_, idx) => ({
       xPct: ((batteryIconX - 5) / baseWidth) * 100,
-      yPx: gridNodeY - 30 - (18 * idx),
+      yPx: gridNodeY - 22 - (18 * idx),
     }));
     const batteryLabelItems = batteryLabelSource.slice(0, batteryLabelCount).map((lbl, idx) => {
       const entity = lbl.entity || null;
@@ -4254,7 +4286,7 @@ class CompactPowerCard extends CompactPowerCardBase {
                   </div>
                 </div>`
               : ""}
-            <div class="overlay-item anchor-left" style="left:${(gridIconX/baseWidth)*100}%; top:${gridIconTop - (gridDirectionalValues ? 8 : 0)}px;">
+            <div class="overlay-item anchor-left grid-section" style="left:${(gridIconX/baseWidth)*100}%; top:${gridNodeY - 5}px;">
               <div class="node-marker grid-marker left clickable" @click=${() => this._handleTapAction(gridCfg, gridCfg.entity)}>
                 ${hasGridIconOverride && gridIconPath
                   ? html`<div class="grid-icon-wrap custom" style="--cpc-grid-icon-stroke:${gridColor}; filter:${allowGlow && gridNumeric !== 0 ? `drop-shadow(0 0 10px ${gridColor})` : "none"};">
@@ -4323,7 +4355,7 @@ class CompactPowerCard extends CompactPowerCardBase {
                 </div>`
               : ""}
             ${hasBattery
-              ? html`<div class="overlay-item anchor-right battery-section" style="left:${(batteryIconX/baseWidth)*100}%; top:${batteryIconTop - (batteryDirectionalValues ? 8 : 0)}px;">
+              ? html`<div class="overlay-item anchor-right battery-section" style="left:${(batteryIconX/baseWidth)*100}%; top:${gridNodeY - 5}px;">
                   <div class="node-marker battery-marker right ${batteryDetails.length ? "" : "clickable"}" @click=${() => {
                     if (!batteryDetails.length) this._handleTapAction(batteryCfg, batteryCfg.entity);
                   }}>

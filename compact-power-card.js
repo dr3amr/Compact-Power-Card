@@ -803,6 +803,11 @@ class CompactPowerCard extends CompactPowerCardBase {
         margin-top: 0;
       }
 
+      .grid-section .node-label:not(.directional-readout),
+      .battery-section .node-label:not(.directional-readout) {
+        transform: translateY(-6px);
+      }
+
       .pv-icon-wrap {
         position: relative;
         width: calc(32px * var(--cpc-scale, 1));
@@ -1073,9 +1078,15 @@ class CompactPowerCard extends CompactPowerCardBase {
 
       .aux-inline-label {
         display: flex;
-        align-items: center;
+        align-items: baseline;
         gap: 3px;
+        line-height: 1;
         white-space: nowrap;
+      }
+
+      .side-label-marker ha-icon {
+        width: calc(16px * var(--cpc-scale, 1));
+        height: calc(16px * var(--cpc-scale, 1));
       }
 
       .aux-inline-label .label-name {
@@ -3847,7 +3858,7 @@ class CompactPowerCard extends CompactPowerCardBase {
     const gridLabelCount = Math.min(gridLabels.length, gridLabelMax);
     const gridLabelPositions = Array.from({ length: gridLabelCount }, (_, idx) => ({
       xPct: ((gridIconX + 6) / baseWidth) * 100,
-      yPx: gridNodeY - 22 - (18 * idx),
+      yPx: gridNodeY - 27 - (18 * idx),
     }));
     const gridLabelItems = gridLabels.slice(0, gridLabelCount).map((lbl, idx) => {
       const entity = lbl.entity || null;
@@ -3908,7 +3919,7 @@ class CompactPowerCard extends CompactPowerCardBase {
     const batteryLabelCount = Math.min(batteryLabelSource.length, batteryLabelMax);
     const batteryLabelPositions = Array.from({ length: batteryLabelCount }, (_, idx) => ({
       xPct: ((batteryIconX - 5) / baseWidth) * 100,
-      yPx: gridNodeY - 22 - (18 * idx),
+      yPx: gridNodeY - 27 - (18 * idx),
     }));
     const batteryLabelItems = batteryLabelSource.slice(0, batteryLabelCount).map((lbl, idx) => {
       const entity = lbl.entity || null;
@@ -4222,7 +4233,7 @@ class CompactPowerCard extends CompactPowerCardBase {
             )}
             ${gridLabelItems.map(
               (lbl) => html`<div class="overlay-item anchor-left" style="left:${lbl.xPct}%; top:${lbl.yPx}px;">
-                <div class="aux-marker clickable" style="flex-direction: row; gap: 4px;" @click=${() => this._openMoreInfo(lbl.entity || null)}>
+                <div class="aux-marker side-label-marker clickable" style="flex-direction: row; gap: 4px;" @click=${() => this._openMoreInfo(lbl.entity || null)}>
                   <ha-icon icon="${lbl.icon}" style="color:${lbl.color}; opacity:1; --mdc-icon-size: calc(16px * var(--cpc-scale, 1)); filter:${allowGlow && lbl.numeric !== 0 ? `drop-shadow(0 0 8px ${lbl.color})` : "none"};"></ha-icon>
                   <div class="aux-label aux-inline-label" style="color:${lbl.color}; opacity:${lbl.hidden ? 0.35 : lbl.opacity};">
                     ${lbl.name ? html`<span class="label-name">${lbl.name}</span>` : ""}
@@ -4234,7 +4245,7 @@ class CompactPowerCard extends CompactPowerCardBase {
             ${(hasBattery || (pvInBatterySlot && pvLabels.length))
               ? batteryLabelItems.map(
                   (lbl) => html`<div class="overlay-item anchor-right battery-label" style="margin-right: 10px; left:${lbl.xPct}%; top:${lbl.yPx}px;">
-                    <div class="aux-marker clickable" style="flex-direction: row; gap: 4px;" @click=${() => this._openMoreInfo(lbl.entity || null)}>
+                    <div class="aux-marker side-label-marker clickable" style="flex-direction: row; gap: 4px;" @click=${() => this._openMoreInfo(lbl.entity || null)}>
                       <div class="aux-label aux-inline-label" style="color:${lbl.color}; opacity:${lbl.hidden ? 0.35 : lbl.opacity};">
                         ${lbl.name ? html`<span class="label-name">${lbl.name}</span>` : ""}
                         <span>${renderValue(lbl.val)}</span>
@@ -4286,7 +4297,7 @@ class CompactPowerCard extends CompactPowerCardBase {
                   </div>
                 </div>`
               : ""}
-            <div class="overlay-item anchor-left grid-section" style="left:${(gridIconX/baseWidth)*100}%; top:${gridNodeY - 5}px;">
+            <div class="overlay-item anchor-left grid-section" style="left:${(gridIconX/baseWidth)*100}%; top:${gridNodeY - 1}px;">
               <div class="node-marker grid-marker left clickable" @click=${() => this._handleTapAction(gridCfg, gridCfg.entity)}>
                 ${hasGridIconOverride && gridIconPath
                   ? html`<div class="grid-icon-wrap custom" style="--cpc-grid-icon-stroke:${gridColor}; filter:${allowGlow && gridNumeric !== 0 ? `drop-shadow(0 0 10px ${gridColor})` : "none"};">
@@ -4297,7 +4308,7 @@ class CompactPowerCard extends CompactPowerCardBase {
                     </div>`
                   : html`<ha-icon icon="${gridIconId}" style="color:${gridColor}; opacity:1; filter:${allowGlow && gridNumeric !== 0 ? `drop-shadow(0 0 10px ${gridColor})` : "none"};"></ha-icon>`}
                 <div
-                  class="node-label left ${gridLabelFlicker ? "label-flicker" : ""}"
+                  class="node-label left ${gridDirectionalValues ? "directional-readout" : ""} ${gridLabelFlicker ? "label-flicker" : ""}"
                   style="color:${gridColor}; --label-opacity:${gridLabelHidden ? 0.35 : gridOpacity}; opacity: var(--label-opacity);"
                 >
                    ${gridDirectionalValues
@@ -4355,7 +4366,7 @@ class CompactPowerCard extends CompactPowerCardBase {
                 </div>`
               : ""}
             ${hasBattery
-              ? html`<div class="overlay-item anchor-right battery-section" style="left:${(batteryIconX/baseWidth)*100}%; top:${gridNodeY - 5}px;">
+              ? html`<div class="overlay-item anchor-right battery-section" style="left:${(batteryIconX/baseWidth)*100}%; top:${gridNodeY - 1}px;">
                   <div class="node-marker battery-marker right ${batteryDetails.length ? "" : "clickable"}" @click=${() => {
                     if (!batteryDetails.length) this._handleTapAction(batteryCfg, batteryCfg.entity);
                   }}>
@@ -4368,7 +4379,7 @@ class CompactPowerCard extends CompactPowerCardBase {
                         </div>`
                       : html`<ha-icon icon="${batteryIconId}" style="color:${batteryColor}; opacity:${batteryIconOpacity}; filter:${allowGlow && battNumericW !== 0 ? `drop-shadow(0 0 10px ${batteryColor})` : "none"};"></ha-icon>`}
                     <div
-                      class="node-label right ${batteryLabelFlicker ? "label-flicker" : ""}"
+                      class="node-label right ${batteryDirectionalValues ? "directional-readout" : ""} ${batteryLabelFlicker ? "label-flicker" : ""}"
                       style="color:${batteryColor}; --label-opacity:${batteryLabelHidden ? 0.35 : batteryLabelOpacity}; opacity: var(--label-opacity);"
                     >
                        ${batteryDirectionalValues

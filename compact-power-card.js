@@ -805,7 +805,8 @@ class CompactPowerCard extends CompactPowerCardBase {
 
       .grid-section .node-label:not(.directional-readout),
       .battery-section .node-label:not(.directional-readout) {
-        transform: translateY(-6px);
+        align-items: baseline;
+        transform: translateY(-11px);
       }
 
       .pv-icon-wrap {
@@ -938,13 +939,11 @@ class CompactPowerCard extends CompactPowerCardBase {
         --mdc-icon-size: calc(12px * var(--cpc-scale, 1));
       }
 
-      .grid-section .node-label > ha-icon.inline-icon,
-      .battery-section .node-label > ha-icon.inline-icon {
-        width: calc(12px * var(--cpc-scale, 1));
-        height: calc(12px * var(--cpc-scale, 1));
-        flex: 0 0 auto;
-        align-self: center;
-        --mdc-icon-size: calc(12px * var(--cpc-scale, 1));
+      .flow-arrow {
+        display: inline-block;
+        font-size: 1em;
+        line-height: 1;
+        margin-right: 2px;
       }
 
       .directional-values {
@@ -959,19 +958,11 @@ class CompactPowerCard extends CompactPowerCardBase {
 
       .directional-value {
         display: flex;
-        align-items: center;
+        align-items: baseline;
         gap: 2px;
         white-space: nowrap;
         height: calc(17px * var(--cpc-scale, 1));
         line-height: 1;
-      }
-
-      .directional-value ha-icon {
-        width: calc(12px * var(--cpc-scale, 1));
-        height: calc(12px * var(--cpc-scale, 1));
-        flex: 0 0 auto;
-        align-self: center;
-        --mdc-icon-size: calc(12px * var(--cpc-scale, 1));
       }
 
       .home-marker {
@@ -3486,12 +3477,13 @@ class CompactPowerCard extends CompactPowerCardBase {
         ? html`<span class="value-unit">${rest}</span>`
         : ""}`;
     };
+    const renderFlowArrow = (icon) => html`<span class="flow-arrow" aria-hidden="true">${icon === "mdi:arrow-left" ? "←" : "→"}</span>`;
     const renderDirectionalValues = (values) => html`<span class="directional-values">${values.map(
       (item) => html`<span class="directional-value clickable" aria-label="${item.name}: ${item.value}" @click=${(ev) => {
         ev.stopPropagation();
         this._openMoreInfo(item.entity);
       }}>
-        <ha-icon class="inline-icon" icon="${item.arrow}"></ha-icon>
+        ${renderFlowArrow(item.arrow)}
         <span>${renderValue(item.value)}</span>
       </span>`
     )}</span>`;
@@ -4332,7 +4324,7 @@ class CompactPowerCard extends CompactPowerCardBase {
                    ${gridDirectionalValues
                      ? renderDirectionalValues(gridDirectionalValues)
                      : html`${gridArrow && !gridLabelHidden
-                         ? html`<ha-icon class="inline-icon" icon="${gridArrow}" style="color:${gridColor}; opacity:${gridOpacity};"></ha-icon>`
+                         ? renderFlowArrow(gridArrow)
                          : ""}
                        <span style="opacity:${gridOpacity};">${renderValue(gridVal)}</span>`}
                 </div>
@@ -4410,7 +4402,7 @@ class CompactPowerCard extends CompactPowerCardBase {
                                }}>${batterySocDisplay}%</span>`
                              : ""}`
                          : html`${battArrow && !batteryLabelHidden
-                             ? html`<ha-icon class="inline-icon" icon="${battArrow}" style="color:${batteryColor}; opacity:1;"></ha-icon>`
+                             ? renderFlowArrow(battArrow)
                              : ""}
                            <span style="opacity:1;">${battValNode}</span>`}
                     </div>
@@ -4438,7 +4430,7 @@ class CompactPowerCard extends CompactPowerCardBase {
                                    }}>${Math.round(b.soc)}%</span>`
                                  : ""}`
                              : html`${b.arrow && !b.hidden
-                                 ? html`<ha-icon class="inline-icon" icon="${b.arrow}" style="color:${b.color}; opacity:1; --mdc-icon-size: calc(12px * var(--cpc-scale, 1));"></ha-icon>`
+                                 ? renderFlowArrow(b.arrow)
                                  : ""}${b.valNode || renderValue(b.val)}`}
                         </div>
                         <ha-icon icon="${b.icon}" style="color:${b.color}; opacity:1; --mdc-icon-size: calc(14px * var(--cpc-scale, 1));"></ha-icon>

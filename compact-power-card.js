@@ -3483,7 +3483,7 @@ class CompactPowerCard extends CompactPowerCardBase {
         ? html`<span class="value-unit">${rest}</span>`
         : ""}`;
     };
-    const renderFlowArrow = (icon) => html`<span class="flow-arrow" aria-hidden="true">${icon === "mdi:arrow-left" ? "\u2B60" : "\u2B62"}</span>`;
+    const renderFlowArrow = (icon) => html`<span class="flow-arrow" aria-hidden="true">${icon === "mdi:arrow-left" ? "\u{1F81C}" : "\u{1F81E}"}</span>`;
     const renderDirectionalValues = (values) => html`<span class="directional-values">${values.map(
       (item) => html`<span class="directional-value clickable" aria-label="${item.name}: ${item.value}" @click=${(ev) => {
         ev.stopPropagation();
